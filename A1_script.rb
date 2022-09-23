@@ -1,5 +1,17 @@
 require_relative "classes/Randomizer" 
 require_relative "classes/Coin" 
+require_relative "classes/Player"
+require_relative "classes/Die"
+require_relative "classes/Coin"
+require_relative "constants/randomizer_enum"
+require_relative "constants/denominations"
+require_relative "constants/die_colours"
+require_relative "constants/coin_sides"
+
+
+#------ TESTING THE RANDOMIZER OBJECT ---------
+puts "TESTING THE RANDOMIZER OBJECT"
+
 
 puts "Creating the randomize object with default face count"
 randomizer = Randomizer.new()
@@ -41,4 +53,37 @@ puts "Current result = #{randomizer.results}"
 puts "calling reset"
 randomizer.reset()
 puts "Current result (Should be nil) = #{randomizer.results}"
+
+
+#------ TESTING THE RANDOMIZER CONTAINER OBJECT ---------
+puts "TESTING THE RANDOMIZER CONTAINER OBJECT"
+
+
+#------ TESTING THE DIE OBJECT ---------
+puts "TESTING THE DIE OBJECT"
+
+
+#------ TESTING THE COIN OBJECT ---------
+puts "TESTING THE COIN OBJECT"
+
+
+#------ TESTING THE HAND OBJECT ---------
+puts "TESTING THE HAND OBJECT"
+
+
+#------ TESTING THE CUP OBJECT ---------
+puts "TESTING THE CUP OBJECT"
+
+
+#------ TESTING THE BAG OBJECT ---------
+puts "TESTING THE BAG OBJECT"
+
+
+#------ TESTING THE RESULTS OBJECT ---------
+puts "TESTING THE RESULTS OBJECT"
+
+
+#------ TESTING THE PLAYER OBJECT ---------
+puts "TESTING THE PLAYER OBJECT"
+
 

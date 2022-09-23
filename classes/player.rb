@@ -71,28 +71,42 @@ class Player
     #sets the description, and calls tally() on each of the stored results
     #and returns each of the values within a single array
     def tally(description:hash = { })
+        total_tally = 0
 
         for random in @@throw_results
             random.set_description(description)
+
+            total_tally += random.tally()
         end
 
-        
-
-
-
+        return total_tally
     end
 
     #sets the description, and calls sum() on each of the stored results
     #and returns the combined values as an array
     def sum(description:hash = { })
+
+        results_sum = 0
+
+        for random in @@throw_results
+            random.set_description(description)
+
+            results_sum += random.sum()
+        end
+
+        return results_sum
     end
 
-    #sets the description and returns the result values as an array,
+    #Sets the description and returns the result values as an array,
     #where the last Results is “throw=0”, the throw before is “throw=1”, etc.
     #If a throw is requested that doesn’t exist (too far back in time and never occurred), return nil
     #Here a “throw” is short for “the result of a given throw”
     def results(description:hash = { }, throw:Int = 0)
+
+        results_array = []
+
+        for random in @@throw_results
+            random.set_description(description)            
+        end
     end
-
-
 end

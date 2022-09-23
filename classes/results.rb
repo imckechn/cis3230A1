@@ -26,7 +26,7 @@ class results
 
         if @@description != nil
             for result in @@results_array
-                if r.get_description() == @@description
+                if result.get_description() == @@description
                     results.push(result.results())
                 end
             end
