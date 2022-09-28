@@ -9,10 +9,16 @@ class Randomizer
 
     #both randomizes as well as returns self (for method chaining)
     def randomize()
+        if @@sides == 0
+            return false
+        end
+
         @@has_been_rolled = true
         @@call_count += 1
 
         @@roll_value = rand(1..@@sides)
+
+        return true
     end
 
     #returns the result of the randomization, or nil if never randomized
