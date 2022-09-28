@@ -6,6 +6,7 @@ class Randomizer
     @@num_faces = 0
     @@description = nil
 
+    #both randomizes as well as returns self (for method chaining)
     def randomize()
         @@has_been_rolled = true
         @@call_count += 1
@@ -13,7 +14,7 @@ class Randomizer
         @@roll_value = rand(1..@@num_faces)
     end
 
-
+    #returns the result of the randomization, or nil if never randomized
     def results()
         if @@has_been_rolled == false
             return nil
@@ -23,11 +24,13 @@ class Randomizer
     end
 
 
+    #returns the number of randomizations performed
     def calls()
         return @@call_count
     end
 
-
+    #sets the result to nil and number of randomizations performed to 0
+    #returns self (for method chaining)
     def reset()
         @@has_been_rolled = false
         @@roll_value = nil
