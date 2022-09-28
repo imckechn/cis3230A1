@@ -35,8 +35,12 @@ class Player
     #returns self (for method chaining)
     def load(description:hash = { })
 
-        for random in @@bag.select(description)
-            @@cup.store(random)
+        for object in @@bag.get_all()
+            
+            if object.matches(description)
+                @@cup.store(object)
+                bag.remove(object)
+            end
         end
 
         return self
@@ -54,8 +58,12 @@ class Player
     #returns self (for method chaining)
     def replace(description:hash = { })
 
-        for random in @@cup.select(description)
-            @@bag.store(random)
+        for object in @@cup.get_all()
+            
+            if object.matches(description)
+                @@bag.store(object)
+                cup.remove(object)
+            end
         end
 
         return self

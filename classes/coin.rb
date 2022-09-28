@@ -7,6 +7,7 @@ class Coin < Randomizer
     def initialize(denomination:Enum)
         @@denomination = denomination
         @@num_faces = 2
+        @@item = Hash["item" => "coin"]
     end
 
     #returns the denomination of the coin (does not set it)

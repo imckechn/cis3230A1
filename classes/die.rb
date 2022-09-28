@@ -1,11 +1,14 @@
 require_relative "Randomizer" 
 
 class die < Randomizer
+    @@num_faces = 0
+    @@colour = nil
 
     #constructor (i.e. Die.new(sides, colour))
     def initialize(sides:Int, colour:Enum)
         @@num_faces = sides
         @@colour = colour
+        @@item = Hash["item" => "die"]
     end
 
     #returns the colour of the die (does not set it)

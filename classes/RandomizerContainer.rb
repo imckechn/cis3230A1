@@ -47,10 +47,10 @@ class randomizerContainer
         hand = hand.new()
         
         for random in @@randomizerList
-
+            if random.matches(description)
+                hand.store(random)
+            end
+        end
+        return hand
     end
-
-
-
-
 end

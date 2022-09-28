@@ -4,6 +4,10 @@ require_relative "results"
 
 class cup < randomizerContainer
 
+    def initialize()
+        @@item = Hash["item" => "cup"]
+    end
+
     #enters each randomizer from a Hand (synonym of move_all() )
     def load(hand:Hand)
         @@randomizerList.concat(hand.get_all())
