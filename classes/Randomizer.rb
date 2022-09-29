@@ -8,17 +8,24 @@ class Randomizer
     #@item = nil    #Item specifies the name of the object
 
     def initialize()
+        self._init()
+    end
+
+
+    def _init()
         @has_been_rolled = false
         @roll_value = nil
         @call_count = 0
         @description = nil
-        @sides = 0
+        @sides = -1
         @item = nil
     end
 
+
+
     #both randomizes as well as returns self (for method chaining)
     def randomize()
-        if @sides == 0
+        if @sides == -1
             return false
         end
 

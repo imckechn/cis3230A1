@@ -2,10 +2,10 @@ require_relative "Randomizer"
 require_relative "../constants/constants"
 
 class Coin < Randomizer
-    @denomination = nil
 
     #constructor (i.e. Coin.new(denomination))
-    def initialize(denomination:Enum)
+    def initialize(denomination)
+        self._init()
         @denomination = denomination
         @sides = 2
         @item = Hash["item" => "coin"] #Item specifies the name of the object
@@ -20,17 +20,21 @@ class Coin < Randomizer
     #returns self (for method chaining)
     #is a synonym for randomize()
     def flip()
-        randomize()
+        self.randomize()
         return self
     end
 
     #returns :H or :T (the result of the last flip) or nil (if no flips yet done)
     #is a synonym for result()
     def sideup()
+        result = self.results()
+
         if result == 1
-            return "heads"
+            return :H
+        elsif result == 0
+            return :T
         else
-            return "tails"
+            return nil
         end
     end
 end

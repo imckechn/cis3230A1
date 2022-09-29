@@ -1,10 +1,11 @@
 require_relative "Randomizer" 
 require_relative "../constants/constants"
 
-class Dice < Randomizer
+class Die < Randomizer
 
     #constructor (i.e. Die.new(sides, colour))
     def initialize(sides, colour)
+        self._init()
         @sides = sides
         @colour = colour
         @item = Hash["item" => "die"]
@@ -23,14 +24,14 @@ class Dice < Randomizer
     #randomizes and returns self (for method chaining)
     #is a synonym for randomize()
     def roll()
-        randomize()
+        self.randomize()
         return self
     end
 
     #returns 1..sides or nil
     #is a synonym for result()
     def sideup()
-        return results()
+        return self.results()
     end
 
 end
