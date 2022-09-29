@@ -1,27 +1,28 @@
 require_relative 'bag'
+require_relative 'cup'
 
 class Player
 
     #Class Variables
-    @@name = nil
-    @@bag = bag.new()
-    @@cup = cup.new()
-    @@throw_results = nil
+    @name = nil
+    @bag = Bag.new()
+    @cup = Cup.new()
+    @throw_results = nil
 
     #constructor (ie Player.new("gandalf")"))
     def initialize(name:String)
-        @@name = name
+        @name = name
     end
 
     #returns the name of the player (does not set it)
     def name()
-        return @@name
+        return @name
     end
 
     #stores the item in the player’s bag
     #returns self (for method chaining
     def store(item:Randomizer)
-        @@bag.store(item)
+        @bag.store(item)
         return self
     end
 
@@ -35,10 +36,10 @@ class Player
     #returns self (for method chaining)
     def load(description:hash = { })
 
-        for object in @@bag.get_all()
+        for object in @bag.get_all()
             
             if object.matches(description)
-                @@cup.store(object)
+                @cup.store(object)
                 bag.remove(object)
             end
         end
@@ -49,20 +50,21 @@ class Player
     #throws the (loaded) cup
     #store and return the results of the “thrown items” (which are still stored in the cup)
     def throw()
-        @@throw_results.push(@@cup.throw())
+        @throw_results.push(@cup.throw())
 
-        return @@throw_results
+        return @throw_results
     end
 
     #replaces the items selected by the description from the cup into the bag
     #returns self (for method chaining)
     def replace(description:hash = { })
+        
 
-        for object in @@cup.get_all()
+        for object in @cup.get_all()
             
             if object.matches(description)
-                @@bag.store(object)
-                cup.remove(object)
+                @bag.store(object)
+                @cup.remove(object)
             end
         end
 
@@ -72,7 +74,7 @@ class Player
     #clears all stored results
     #returns self (for method chaining)
     def clear()
-        @@throw_results = []
+        @throw_results = []
         return self
     end
 
@@ -81,7 +83,7 @@ class Player
     def tally(description:hash = { })
         total_tally = 0
 
-        for random in @@throw_results
+        for random in @throw_results
             random.set_description(description)
 
             total_tally += random.tally()
@@ -96,7 +98,7 @@ class Player
 
         results_sum = 0
 
-        for random in @@throw_results
+        for random in @throw_results
             random.set_description(description)
 
             results_sum += random.sum()
@@ -109,11 +111,11 @@ class Player
     #where the last Results is “throw=0”, the throw before is “throw=1”, etc.
     #If a throw is requested that doesn’t exist (too far back in time and never occurred), return nil
     #Here a “throw” is short for “the result of a given throw”
-    def results(description:hash = { }, throw:Int = 0)
+    def results(description:hash = { }, throw:int = 0)
 
         results_array = []
 
-        for random in @@throw_results
+        for random in @throw_results
             random.set_description(description)            
         end
     end

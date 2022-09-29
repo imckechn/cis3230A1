@@ -2,15 +2,15 @@ require_relative "RandomizerContainer"
 require_relative "hand"
 require_relative "results"
 
-class cup < randomizerContainer
+class Cup < RandomizerContainer
 
     def initialize()
-        @@item = Hash["item" => "cup"]
+        @item = Hash["item" => "cup"] #Item specifies the name of the object
     end
 
     #enters each randomizer from a Hand (synonym of move_all() )
     def load(hand:Hand)
-        @@randomizerList.concat(hand.get_all())
+        @randomizerList.concat(hand.get_all())
         return self
     end
 
@@ -27,7 +27,7 @@ class cup < randomizerContainer
         #results needs to be updated
         results = results.new()
 
-        for r in @@randomizerList
+        for r in @randomizerList
             r.randomize()
             results.store(r)
         end

@@ -1,24 +1,23 @@
 require_relative "Randomizer" 
+require_relative "../constants/constants"
 
-class die < Randomizer
-    @@num_faces = 0
-    @@colour = nil
+class Dice < Randomizer
 
     #constructor (i.e. Die.new(sides, colour))
-    def initialize(sides:Int, colour:Enum)
-        @@num_faces = sides
-        @@colour = colour
-        @@item = Hash["item" => "die"]
+    def initialize(sides, colour)
+        @sides = sides
+        @colour = colour
+        @item = Hash["item" => "die"]
     end
 
     #returns the colour of the die (does not set it)
     def colour()
-        return @@colour
+        return @colour
     end
 
     #eturns the number of sides ( does not set it)
     def sides()
-        return @@num_faces
+        return @sides
     end
 
     #randomizes and returns self (for method chaining)

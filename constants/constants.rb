@@ -1,29 +1,6 @@
-module randomizer_enum
-    coin = 1
-    die = 2
-end
-
-module denominations
-    0.05 = 1
-    0.10 = 2
-    0.25 = 3
-    0.50 = 4
-    1.00 = 5
-    2.00 = 6
-end
-
-module die_colours
-    red = 1
-    blue = 2
-    green = 3
-    yellow = 4
-    black = 5
-    white = 6
-end
-
-module coin_sides
-    h = 1
-    t = 2
-end
+Randomizer_Enum = [Coin = 'coin', Die = 'die']
+Denominations = ['0.05' => 0.05, '0.10' => 0.10, '0.25' => 0.25, '0.50' => 0.50, '1.00' => 1.00, '2.00' => 2.00]
+Die_colours = [red = 'red', blue = 'blue', green = 'green', yellow = 'yellow', black = 'black', white = 'white']
+Coin_sides = [h = 'h', t = 't']
 
 

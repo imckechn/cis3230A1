@@ -1,20 +1,20 @@
-class results
+class Results
 
     #Class variables
-    @@cup = nil
-    @@description = nil
-    @@results_array = []
+    @cup = nil
+    @description = nil
+    @results_array = []
 
 
     #constructor (i.e. Results.new(cup)
     def initialize(cup: Cup)
-        @@cup = cup
+        @cup = cup
     end
 
     #Stores a description in Results from which the “randomizer” objects stored in Results (i.e. in self)
     #can be selected when computing the results, tally or sum
     def description(description:Hash)
-        @@description = description
+        @description = description
         return self
     end
 
@@ -24,16 +24,16 @@ class results
     def results()
         results = []
 
-        if @@description != nil
-            for result in @@results_array
-                if result.get_description() == @@description
+        if @description != nil
+            for result in @results_array
+                if result.get_description() == @description
                     results.push(result.results())
                 end
             end
 
 
         else
-            for result in @@results_array
+            for result in @results_array
                 results.push(result.results())
             end
         end
@@ -48,11 +48,11 @@ class results
         counter = 0
 
         if description == nil
-            counter = @@results_array.length
+            counter = @results_array.length
 
         else
-            for result in @@results_array
-                if result.get_description() == @@description
+            for result in @results_array
+                if result.get_description() == @description
                     counter += 1
                 end
             end
@@ -67,14 +67,14 @@ class results
     def sum()
         sum = 0
 
-        if @@description == nil
-            for result in @@results_array
+        if @description == nil
+            for result in @results_array
                 sum += result.results()
             end
 
         else
-            for result in @@results_array
-                if result.get_description() == @@description
+            for result in @results_array
+                if result.get_description() == @description
                     sum += result.results()
                 end
             end
@@ -85,7 +85,7 @@ class results
 
     #Stores a randomizer in the Results (i.e. in self)
     def store(rand:randomizer)
-        @@results_array.push(rand)
+        @results_array.push(rand)
     end
 
 

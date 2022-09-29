@@ -1,12 +1,12 @@
 require_relative "classes/Randomizer" 
-require_relative "classes/Coin" 
-require_relative "classes/Player"
 require_relative "classes/Die"
-require_relative "classes/Coin"
-require_relative "constants/randomizer_enum"
-require_relative "constants/denominations"
-require_relative "constants/die_colours"
-require_relative "constants/coin_sides"
+#require_relative "classes/Coin" 
+#require_relative "classes/Player"
+#require_relative "constants/constants"
+#require_relative "constants/Randomizer_Enum"
+#require_relative "constants/Denominations"
+#require_relative "constants/Die_colours"
+#require_relative "constants/Coin_sides"
 
 
 
@@ -15,13 +15,13 @@ require_relative "constants/coin_sides"
 #----------------------------- 
 #   TO DO
 
-# The item hashes and the description need to be merged, THERE CAN ONLY BE ONE
 # Figure out the tally, sum, and results functions in player.rb
 # Figure out what the emuns are for in the constants file
 # Fix Ruby style guide violations
 # Make sure program is to 'OO' standards
 # Finish testgames.rb file
 # Create 5 use cases for the program
+# When to use @@var and @var in classes
 
 #-----------------------------
 
@@ -31,12 +31,12 @@ puts "TESTING THE RANDOMIZER OBJECT"
 
 
 puts "Creating the randomize object with default face count"
-puts "Measurement of success will be not crashing as there is no init function set"
+puts "Measurement of success will be not crashing"
 randomizer = Randomizer.new()
 puts "Succeeded"
 
 puts "Check the number of randmizations performed, should be zero"
-call_count = randomzier.calls()
+call_count = randomizer.calls()
 if (call_count == 0)
     puts "Succeeded"
 else
@@ -71,6 +71,33 @@ end
 
 #------ TESTING THE DIE OBJECT ---------
 puts "TESTING THE DIE OBJECT"
+
+puts "Creating a die object with 6 sides and a red colour"
+puts "Measurement of success will be not crashing as init doesnt return anything"
+die = Die.new(6, Die_colours[:red])
+puts "Succeeded"
+
+puts "Calling the colour function on the die object"
+puts "This should return the colour we set"
+#colour = die.colour()
+#if colour == die_colours::red
+#    puts "Succeeded"
+#else
+#    puts "Failed"
+#end
+
+puts "Calling the sides function on the die object"
+puts "This should return the sides we set"
+#sides = die.sides()
+#if sides == 6
+#    puts "Succeeded"
+#else
+#    puts "Failed"
+#end
+
+puts "Calling the roll() function, should return self on success"
+#d = die.roll()
+#puts "d = #{d} Donete"
 
 
 #------ TESTING THE COIN OBJECT ---------
