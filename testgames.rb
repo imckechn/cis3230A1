@@ -3,12 +3,9 @@ require_relative "constants/constants"
 require_relative "classes/Randomizer" 
 require_relative "classes/Die"
 require_relative "classes/Coin" 
+require_relative "classes/Hand"
 #require_relative "classes/Player"
-#require_relative "constants/Randomizer_Enum"
-#require_relative "constants/Denominations"
-#require_relative "constants/Die_colours"
-#require_relative "constants/Coin_sides"
-
+require_relative "classes/RandomizerContainer"
 
 
 
@@ -26,9 +23,10 @@ require_relative "classes/Coin"
 
 #-----------------------------
 
+fail_counter = 0
 
 #------ TESTING THE RANDOMIZER OBJECT ---------
-puts "TESTING THE RANDOMIZER OBJECT"
+puts "\n\nTESTING THE RANDOMIZER OBJECT"
 
 
 puts "Creating the randomize object with default face count"
@@ -42,6 +40,7 @@ if (call_count == 0)
     puts "Succeeded"
 else
     puts "Failed"
+    fail_counter += 1
 end
 
 
@@ -51,6 +50,7 @@ randomizer_return = randomizer.randomize()
 
 if randomizer_return
     puts "Failed"
+    fail_counter += 1
 else
     puts "Succeeded"
 end
@@ -67,11 +67,13 @@ if description['item'] == 'not_real'
     puts "Succeeded"
 else
     puts "Failed"
+    fail_counter += 1
 end
+puts "\nThere were #{fail_counter} failure(s) in this section."
 
 
 #------ TESTING THE DIE OBJECT ---------
-puts "TESTING THE DIE OBJECT"
+puts "\n\nTESTING THE DIE OBJECT"
 
 puts "Creating a die object with 6 sides and a red colour"
 puts "Measurement of success will be not crashing as init doesnt return anything"
@@ -85,6 +87,7 @@ if colour == Die_colours[1]
     puts "Succeeded"
 else
     puts "Failed"
+    fail_counter += 1
 end
 
 puts "Calling the sides function on the die object"
@@ -94,6 +97,7 @@ if sides == 6
     puts "Succeeded"
 else
     puts "Failed"
+    fail_counter += 1
 end
 
 puts "Calling the roll() function, should return self on success"
@@ -104,11 +108,13 @@ puts "Calling the result() function, should return the result of the roll"
 result = die.sideup()
 if result == nil
     puts "Failed, retults are nil"
+    fail_counter += 1
 
 elsif result > 0 && result < 7
     puts "Succeeded"
 else
     puts "Failed"
+    fail_counter += 1
 end
 
 puts "Calling the set_description() function, should set the description of the die"
@@ -122,6 +128,7 @@ if description['item'] == 'die'
     puts "Succeeded"
 else
     puts "Failed"
+    fail_counter += 1
 end
 
 puts "Getting the number of faces on the die"
@@ -131,6 +138,7 @@ if num_faces == 6
     puts "Succeeded"
 else
     puts "Failed"
+    fail_counter += 1
 end
 
 puts "Calling the reset() function, should reset the die"
@@ -145,12 +153,15 @@ if result == nil
     puts "Succeeded"
 else
     puts "Failed"
+    fail_counter += 1
 end
+
+puts "\nThere were #{fail_counter} failure(s) in this section."
 
 
 
 #------ TESTING THE COIN OBJECT ---------
-puts "TESTING THE COIN OBJECT"
+puts "\n\nTESTING THE COIN OBJECT"
 
 puts "Creating a coin object with a denomination of 50 cents"
 puts "Measurement of success will be not crashing as init doesnt return anything"
@@ -164,6 +175,7 @@ if denomination == Denominations["0.05"]
     puts "Succeeded"
 else
     puts "Failed"
+    fail_counter += 1
 end
 
 puts "Calling the flip() function, should return self on success"
@@ -174,11 +186,13 @@ puts "Calling the result() function, should return the result of the flip"
 result = coin.sideup()
 if result == nil
     puts "Failed, retults are nil"
+    fail_counter += 1
 
 elsif result == :H || result == :T
     puts "Succeeded"
 else
     puts "Failed"
+    fail_counter += 1
 end
 
 puts "Calling the set_description() function, should set the description of the coin"
@@ -192,6 +206,7 @@ if description['item'] == 'Nickel'
     puts "Succeeded"
 else
     puts "Failed"
+    fail_counter += 1
 end
 
 puts "Calling the reset() function, should reset the coin"
@@ -206,19 +221,152 @@ if result == nil
     puts "Succeeded"
 else
     puts "Failed, it returned #{result}"
+    fail_counter += 1
 end
+
+puts "\nThere were #{fail_counter} failure(s) in this section."
+
 
 
 #------ TESTING THE RANDOMIZER CONTAINER OBJECT ---------
-puts "TESTING THE RANDOMIZER CONTAINER OBJECT"
+puts "\n\nTESTING THE RANDOMIZER CONTAINER OBJECT"
+
+puts "Initializing the randomizerContianer. This should not crash"
+randomizerContainer = RandomizerContainer.new()
+
+puts "Getting the number of randomizers in the container"
+puts "This should return 0"
+num_randomizers = randomizerContainer.count()
+if num_randomizers == 0
+    puts "Succeeded"
+else
+    puts "Failed"
+    fail_counter += 1
+end
+
+puts "Adding a randomizer to the container"
+puts "This should not crash"
+randomizerContainer.store(randomizer)
+puts "Succeeded"
+
+puts "Getting the number of randomizers in the container"
+puts "This should return 1"
+num_randomizers = randomizerContainer.count()
+if num_randomizers == 1
+    puts "Succeeded"
+else
+    puts "Failed"
+    fail_counter += 1
+end
+
+puts "Adding a list of randomizers of length 2 to the container"
+puts "This should not crash"
+randomizerContainer.store_all([coin, die])
+puts "Succeeded"
+
+puts "\nThere were #{fail_counter} failure(s) in this section."
 
 
 #------ TESTING THE HAND OBJECT ---------
 puts "TESTING THE HAND OBJECT"
 
+puts "Initializing the hand. This should not crash"
+hand = Hand.new()
+puts "Succeeded"
+
+puts "Getting the number of ranomizers in the hand"
+puts "This should return 0"
+num_randomizers = hand.count()
+if num_randomizers == 0
+    puts "Succeeded"
+else
+    puts "Failed"
+    fail_counter += 1
+end
+
+puts "Adding a randomizer to the hand"
+puts "This should not crash"
+hand.store(randomizer)
+puts "Succeeded"
+
+puts "Getting the number of randomizers in the hand"
+puts "This should return 1"
+num_randomizers = hand.count()
+if num_randomizers == 1
+    puts "Succeeded"
+else
+    puts "Failed"
+    fail_counter += 1
+end
+
+puts "Getting the randomizer back from the hand"
+puts "This will return the randomizer we added"
+
+new_randomizer = hand.next()
+
+if new_randomizer.get_description() == randomizer.get_description()
+    puts "Succeeded"
+else
+    puts "Failed"
+    fail_counter += 1
+end
+
+puts "Adding 3 randomizers to the hand, then confirming we get them back in the order we put them in"
+hand.store_all([randomizer, die, coin])
+
+randomizer_a = hand.next()
+randomizer_b = hand.next()
+randomizer_c = hand.next()
+randomizer_nil = hand.next()
+
+if randomizer_a.get_description() == coin.get_description()
+    if randomizer_b.get_description() == die.get_description()
+        if randomizer_c.get_description() == randomizer.get_description()
+            if randomizer_nil == nil
+                puts "Succeeded, returned each item in order, finishing with nil"
+            else
+                puts "Failed"
+                fail_counter += 1
+            end
+        else
+            puts "Failed"
+            fail_counter += 1
+        end
+    else
+        puts "Failed"
+        fail_counter += 1
+    end
+else
+    puts "Failed on coin, got #{randomizer_a.get_description()}"
+    fail_counter += 1
+end
+
+puts "Adding a randomizer to the hand, empyting the hand, then confirming we get nil back and the hand is empty"
+hand.store(randomizer)
+
+answer = hand.empty()
+if answer == nil
+    puts "Succeeded in getting nil back from emptying the hand"
+else
+    puts "Failed"
+    fail_counter += 1
+end
+
+answer = hand.next()
+if answer == nil
+    puts "Succeeded in getting nil back from calling next on an empty hand"
+else
+    puts "Failed"
+    fail_counter += 1
+end
+
+puts "\nThere were #{fail_counter} failure(s) in this section."
+
 
 #------ TESTING THE CUP OBJECT ---------
 puts "TESTING THE CUP OBJECT"
+
+
 
 
 #------ TESTING THE BAG OBJECT ---------
@@ -232,4 +380,6 @@ puts "TESTING THE RESULTS OBJECT"
 #------ TESTING THE PLAYER OBJECT ---------
 puts "TESTING THE PLAYER OBJECT"
 
-
+#------ FINAL READOUT ---------
+puts "\n\nTESTING COMPLETE"
+puts "There were #{fail_counter} failure(s)."

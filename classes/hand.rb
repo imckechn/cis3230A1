@@ -11,7 +11,7 @@ class Hand < RandomizerContainer
         else
             return nil
         end
-
+        
     end
 
 

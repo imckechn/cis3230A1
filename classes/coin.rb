@@ -29,9 +29,11 @@ class Coin < Randomizer
     def sideup()
         result = self.results()
 
-        if result == 1
+        puts "Result: #{result}"
+
+        if result == 2
             return :H
-        elsif result == 0
+        elsif result == 1
             return :T
         else
             return nil

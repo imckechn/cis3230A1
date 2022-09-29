@@ -17,7 +17,7 @@ class Randomizer
         @roll_value = nil
         @call_count = 0
         @description = nil
-        @sides = -1
+        @sides = 0
         @item = nil
     end
 
@@ -25,7 +25,7 @@ class Randomizer
 
     #both randomizes as well as returns self (for method chaining)
     def randomize()
-        if @sides == -1
+        if @sides == 0
             return false
         end
 

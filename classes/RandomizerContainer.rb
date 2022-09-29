@@ -1,17 +1,24 @@
 class RandomizerContainer
 
-    @randomizerList = []
+    def initialize()
+        self._init()
+    end
+
+    def _init()
+        @randomizerList = []
+        @item = Hash["item" => "randomizerContainer"]
+    end
 
     #stores a randomizer in the container
     #returns self (for method chaining)
-    def store(r:Randomizer)
+    def store(r)
         @randomizerList.push(r)
         return self
     end
 
     #stores all randomizers from a list
     #returns self (for method chaining)
-    def store_all(l:List)
+    def store_all(l)
         @randomizerList.concat(l)
         return self
     end
