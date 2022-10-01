@@ -531,6 +531,20 @@ puts "Succeeded"
 
 puts "Putting items in a hand object, then loading the bag with the hand"
 hand.store_all([die, coin])
+bag.move_all(hand)
+puts "Succeeded"
+
+puts "Getting the items back from the bag, then comparing them to the original items"
+hand = bag.empty()
+coin = hand.next()
+die = hand.next()
+
+if results.sum() == (coin.results() + die.results())
+    puts "Succeeded"
+else
+    puts "Failed"
+    fail_counter += 1
+end
 
 
 
