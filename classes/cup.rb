@@ -6,6 +6,7 @@ class Cup < RandomizerContainer
 
     def initialize()
         @item = Hash["item" => "cup"] #Item specifies the name of the object
+        self._init()
     end
 
     #enters each randomizer from a Hand (synonym of move_all() )

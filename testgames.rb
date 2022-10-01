@@ -4,8 +4,9 @@ require_relative "classes/Randomizer"
 require_relative "classes/Die"
 require_relative "classes/Coin" 
 require_relative "classes/Hand"
-#require_relative "classes/Player"
 require_relative "classes/RandomizerContainer"
+require_relative "classes/Cup"
+require_relative "classes/Results"
 
 
 
@@ -365,6 +366,100 @@ puts "\nThere were #{fail_counter} failure(s) in this section."
 
 #------ TESTING THE RESULTS OBJECT ---------
 puts "TESTING THE RESULTS OBJECT"
+cup = Cup.new()
+
+puts "Initializing the results. This should not crash"
+results = Results.new(cup)
+puts "Succeeded"
+
+# Need to test the description feature
+
+puts "Storing 3 randomizers in the results object"
+
+results_array = []
+randomizer.randomize()
+randomizer_results = randomizer.results()
+results_array.push(randomizer_results)
+
+die.randomize()
+die_results = die.results()
+results_array.push(die_results)
+
+coin.randomize()
+coin_results = coin.results()
+results_array.push(coin_results)
+
+results.store(randomizer)
+results.store(die)
+results.store(coin)
+puts ("Succeeded in storing 3 randomizers")
+
+puts "Now getting the results of all the randomizers"
+puts "The results of the randomizers before adding them to the array were: #{results_array} so it will succeeed if it returns the same thing"
+results_from_results = results.results()
+
+if results_from_results == results_array
+    puts "Succeeded"
+else
+    puts "Failed"
+    fail_counter += 1
+end
+
+puts "Testing the sum method"
+puts "The sum should only be equal to the the sum of all the results"
+puts "Randomizer results: #{randomizer.results()}"
+
+sum_results = results.sum()
+if sum_results == (coin.results() + die.results() + randomizer.results())
+    puts "Succeeded"
+else
+    puts "Failed"
+    fail_counter += 1
+end
+
+
+puts "Testing the Tally method"
+puts "The tally should only be equal to the number of coins the results object(1_"
+tally_results = results.tally()
+if tally_results == 1
+    puts "Succeeded"
+else
+    puts "Failed"
+    fail_counter += 1
+end
+
+
+
+puts "Adding a good description to the array and making sure it returns the coin object results"
+results.description(coin.get_description())
+results_from_results = results.results()
+if results_from_results == [coin.results()]
+    puts "Succeeded"
+else
+    puts "Failed"
+end
+
+
+puts "Testing the sum method"
+puts "The sum should only be equal to the coins results"
+sum_results = results.sum()
+if sum_results == coin.results()
+    puts "Succeeded"
+else
+    puts "Failed"
+    fail_counter += 1
+end
+
+
+puts "Testing the Tally method"
+puts "The tally should only be equal to the number of coins the results object(1_"
+tally_results = results.tally()
+if tally_results == 1
+    puts "Succeeded"
+else
+    puts "Failed"
+    fail_counter += 1
+end
 
 
 
@@ -384,6 +479,17 @@ puts "TESTING THE BAG OBJECT"
 
 #------ TESTING THE PLAYER OBJECT ---------
 puts "TESTING THE PLAYER OBJECT"
+
+
+#------ RUNNING TEST GAME SCENARIO 1 ---------
+puts "TESTING THE PLAYER OBJECT"
+
+
+#------ RUNNING TEST GAME SCENARIO 2 ---------
+
+
+#------ RUNNING TEST GAME SCENARIO 3 ---------
+
 
 #------ FINAL READOUT ---------
 puts "\n\nTESTING COMPLETE"

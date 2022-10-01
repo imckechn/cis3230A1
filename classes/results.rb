@@ -1,9 +1,9 @@
+require_relative "Cup"
+
 class Results
 
-
     #constructor (i.e. Results.new(cup)
-    def initialize(cup: Cup)
-
+    def initialize(cup)
         self._init()
         @cup = cup
     end
@@ -17,7 +17,7 @@ class Results
 
     #Stores a description in Results from which the “randomizer” objects stored in Results (i.e. in self)
     #can be selected when computing the results, tally or sum
-    def description(description:Hash)
+    def description(description)
         @description = description
         return self
     end
@@ -27,23 +27,24 @@ class Results
     #Only include the values from randomizers that match the description stored in the Results.
     #If description() has not yet been called, return the results from all randomizers
     def results()
-        results = []
+        ranomizer_results = []
 
-        if @description != nil
+        if @description != nil #There is a description
             for result in @results_array
                 if result.get_description() == @description
-                    results.push(result.results())
+                    ranomizer_results.push(result.results())
                 end
             end
 
 
         else
             for result in @results_array
-                results.push(result.results())
+                ranomizer_results.push(result.results())
             end
+            
         end
 
-        return results
+        return ranomizer_results
 
     end
 
@@ -53,7 +54,7 @@ class Results
     def tally()
         counter = 0
 
-        if description == nil
+        if @description == nil
             counter = @results_array.length
 
         else
@@ -92,7 +93,8 @@ class Results
 
 
     #Stores a randomizer in the Results (i.e. in self)
-    def store(rand:randomizer)
+    def store(rand)
+        puts "Storing #{rand.class}"
         @results_array.push(rand)
     end
 end

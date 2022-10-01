@@ -4,6 +4,7 @@ class Hand < RandomizerContainer
 
     def initialize()
         @item = Hash["item" => "hand"]
+        self._init()
     end
 
     #removes and returns the last objected added to the hand
