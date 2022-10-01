@@ -614,12 +614,22 @@ else
     fail_counter += 1
 end
 
-die_2 = Die.new(10, Die_colours[3])
-coin_2 = Coin.new(Denominations[3])
+#Initing the dice and coins
+die_1 = Die.new(6, Die_colours[0])
+die_1.set_description({"item" => "die", "colour" => "red", "sides" => 6})
+
+coin_1 = Coin.new(Denominations[0])
+coin_1.set_description({"item" => "coin", "demonination" => "Nickel"})
+
+die_2 = Die.new(10, Die_colours[1])
+die_2.set_description({"item" => "die", "colour" => "blue", "sides" => 10})
+
+coin_2 = Coin.new(Denominations[1])
+coin_2.set_description({"item" => "coin", "denomination" => "Dime"})
 
 puts "Adding a single die to the players bag"
 puts "If it doesnt crash then it's successful"
-player.store(die_2)
+player.store(die_1)
 
 if player.get_num_randomziers() == 1
     puts "Succeeded"
@@ -631,7 +641,7 @@ end
 puts "Adding a batch of 3 coins and die to the players bag"
 puts "If it doesnt crash then it's successful"
 randomizerContainer = RandomizerContainer.new()
-randomizerContainer.store_all([coin_2, die, coin])
+randomizerContainer.store_all([coin_1, die_2, coin_2])
 player.move_all(randomizerContainer)
 puts "Succeeded"
 
@@ -643,8 +653,10 @@ else
     fail_counter += 1
 end
 
+puts "All objects the player has = #{player.get_all_objects_player_has()}"
+
 puts "Moving randomizers to the players cup if the description is 'Fake description'"
-player.load("Fake description")
+player.load({"Fake description" => "True"})
 count = player.get_num_objects_in_cup()
 if count == 0
     puts "Succeeded"
@@ -653,6 +665,79 @@ else
     fail_counter += 1
 end
 
+puts "adding an object with no decsription to the players bag"
+coin_3 = Coin.new(Denominations[2])
+player.store(coin_3)
+puts "Succeeded"
+
+puts "Moving randomizers to the players cup if the description is '{'item' => 'coin', 'demonination' => 'Nickel'}'"
+puts "This should 2 coins in the cup"
+player.load({"item" => "coin", "demonination" => "Nickel"})
+count = player.get_num_objects_in_cup()
+if count == 2
+    puts "Succeeded"
+else
+    puts "Failed"
+    fail_counter += 1
+end
+
+puts "Trying to move the objects back from the cup to the bag with a bad description"
+puts "This should move the coin without a description"
+player.replace({"Hello" => "World"})
+count = player.get_num_objects_in_cup()
+if count == 1
+    puts "Succeeded"
+else
+    puts "Failed"
+    fail_counter += 1
+end
+
+puts "Trying again with a good description"
+player.replace({"item" => "coin", "demonination" => "Nickel"})
+count = player.get_num_objects_in_cup()
+if count == 0
+    puts "Succeeded"
+else
+    puts "Failed"
+    fail_counter += 1
+end
+
+puts "Testing the throw method"
+puts "Since there are no items in the cup, this should return a array "
+results = player.throw()
+if results.sum() == 0
+    puts "Succeeded"
+else
+    puts "Failed"
+    fail_counter += 1
+end
+
+puts "2 die to the cup"
+
+player = Player.new("Jane")
+player.store(die_1)
+player.store(die_2)
+player.load({"item" => "die", "colour" => "red", "sides" => 6})
+
+puts "Testing the throw method"
+puts "Since there are items in the cup, this should return a results object"
+results = player.throw()
+if results.class == Results
+    puts "Succeeded"
+else
+    puts "Failed"
+    fail_counter += 1
+end
+
+puts "Calling the tally method"
+puts "This should return an array of length 1 with the results of the throw"
+results = player.tally({"item" => "die", "colour" => "red", "sides" => 6})
+if results.length == 1
+    puts "Succeeded"
+else
+    puts "Failed, results.length = #{results.length}"
+    fail_counter += 1
+end
 
 
 
