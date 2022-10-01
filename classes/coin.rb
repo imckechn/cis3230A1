@@ -32,7 +32,6 @@ class Coin < Randomizer
         puts "Result: #{result}"
 
         #Heads = 1, Tails = 0
-
         if result == 1
             return :H
         elsif result == 0
