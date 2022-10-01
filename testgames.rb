@@ -363,8 +363,16 @@ end
 puts "\nThere were #{fail_counter} failure(s) in this section."
 
 
+#------ TESTING THE RESULTS OBJECT ---------
+puts "TESTING THE RESULTS OBJECT"
+
+
+
 #------ TESTING THE CUP OBJECT ---------
 puts "TESTING THE CUP OBJECT"
+
+puts "Initializing the cup. This should not crash"
+cup = Cup.new()
 
 
 
@@ -372,9 +380,6 @@ puts "TESTING THE CUP OBJECT"
 #------ TESTING THE BAG OBJECT ---------
 puts "TESTING THE BAG OBJECT"
 
-
-#------ TESTING THE RESULTS OBJECT ---------
-puts "TESTING THE RESULTS OBJECT"
 
 
 #------ TESTING THE PLAYER OBJECT ---------

@@ -31,7 +31,13 @@ class Die < Randomizer
     #returns 1..sides or nil
     #is a synonym for result()
     def sideup()
-        return self.results()
+        answer = self.results()
+
+        if answer == nil
+            return nil
+        else
+            return self.results() + 1
+        end
     end
 
 end

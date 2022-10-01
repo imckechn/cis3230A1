@@ -25,7 +25,11 @@ class RandomizerContainer
 
     #returns the count of all randomizer stored in itself
     def count()
-        return @randomizerList.length
+        if (@randomizerList == nil)
+            return 0
+        else 
+            return @randomizerList.length
+        end
     end
 
     #remove each randomizer in rc & store it in self

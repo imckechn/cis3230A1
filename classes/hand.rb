@@ -2,6 +2,10 @@ require_relative 'RandomizerContainer'
 
 class Hand < RandomizerContainer
 
+    def initialize()
+        @item = Hash["item" => "hand"]
+    end
+
     #removes and returns the last objected added to the hand
     #if no objects are in the hand, return nil
     def next()
@@ -11,7 +15,7 @@ class Hand < RandomizerContainer
         else
             return nil
         end
-        
+
     end
 
 

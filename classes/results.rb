@@ -1,15 +1,19 @@
 class Results
 
-    #Class variables
-    @cup = nil
-    @description = nil
-    @results_array = []
-
 
     #constructor (i.e. Results.new(cup)
     def initialize(cup: Cup)
+
+        self._init()
         @cup = cup
     end
+
+
+    def _init()
+        @description = nil
+        @results_array = []
+    end
+
 
     #Stores a description in Results from which the “randomizer” objects stored in Results (i.e. in self)
     #can be selected when computing the results, tally or sum
@@ -17,6 +21,7 @@ class Results
         @description = description
         return self
     end
+
 
     #Returns an array containing the “side-up” values of the randomizers recorded in the Results (i.e. in self).
     #Only include the values from randomizers that match the description stored in the Results.
@@ -42,6 +47,7 @@ class Results
 
     end
 
+
     #Counts the items in the that match the description and returns the value
     #If description() has not yet been called, count all randomizers
     def tally()
@@ -60,6 +66,7 @@ class Results
 
         return counter
     end
+
 
     #totals the value of the randomizer items in the Results that match the description, where the value
     #equals the number that is “up” (for coins, :H = 1 and :T = 0), and returns the value
@@ -83,10 +90,9 @@ class Results
         return sum
     end
 
+
     #Stores a randomizer in the Results (i.e. in self)
     def store(rand:randomizer)
         @results_array.push(rand)
     end
-
-
 end

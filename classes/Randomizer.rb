@@ -1,11 +1,4 @@
 class Randomizer
-    #@status = nil
-    #@has_been_rolled = false
-    #@roll_value = nil
-    #@call_count = 0
-    #@description = nil #Hash containing the description of the randomizer
-    #@sides = 0
-    #@item = nil    #Item specifies the name of the object
 
     def initialize()
         self._init()
@@ -17,7 +10,7 @@ class Randomizer
         @roll_value = nil
         @call_count = 0
         @description = nil
-        @sides = 0
+        @sides = -1
         @item = nil
     end
 
@@ -25,14 +18,14 @@ class Randomizer
 
     #both randomizes as well as returns self (for method chaining)
     def randomize()
-        if @sides == 0
+        if @sides == -1
             return false
         end
 
         @has_been_rolled = true
         @call_count += 1
 
-        @roll_value = rand(1..@sides)
+        @roll_value = rand(0..@sides - 1)
 
         return true
     end
