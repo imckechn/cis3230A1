@@ -377,9 +377,6 @@ puts "Succeeded"
 puts "Storing 3 randomizers in the results object"
 
 results_array = []
-randomizer.randomize()
-randomizer_results = randomizer.results()
-results_array.push(randomizer_results)
 
 die.randomize()
 die_results = die.results()
@@ -389,10 +386,9 @@ coin.randomize()
 coin_results = coin.results()
 results_array.push(coin_results)
 
-results.store(randomizer)
 results.store(die)
 results.store(coin)
-puts ("Succeeded in storing 3 randomizers")
+puts ("Succeeded in storing both randomizers (Dice and Coin)")
 
 puts "Now getting the results of all the randomizers"
 puts "The results of the randomizers before adding them to the array were: #{results_array} so it will succeeed if it returns the same thing"
@@ -407,10 +403,9 @@ end
 
 puts "Testing the sum method"
 puts "The sum should only be equal to the the sum of all the results"
-puts "Randomizer results: #{randomizer.results()}"
 
 sum_results = results.sum()
-if sum_results == (coin.results() + die.results() + randomizer.results())
+if sum_results == (coin.results() + die.results())
     puts "Succeeded"
 else
     puts "Failed"
@@ -419,9 +414,9 @@ end
 
 
 puts "Testing the Tally method"
-puts "The tally should only be equal to the number of coins the results object(1_"
+puts "The tally should only be equal to 2 since there is no description and there are 2 objects in it"
 tally_results = results.tally()
-if tally_results == 1
+if tally_results == 2
     puts "Succeeded"
 else
     puts "Failed"
@@ -452,7 +447,7 @@ end
 
 
 puts "Testing the Tally method"
-puts "The tally should only be equal to the number of coins the results object(1_"
+puts "The tally should only be equal to the number of coins the results object(1)"
 tally_results = results.tally()
 if tally_results == 1
     puts "Succeeded"
