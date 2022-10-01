@@ -65,16 +65,15 @@ class Randomizer
     end
 
     #Check if the description given matches the one in the randomizer, if so return true
-    def matches(descriptionArg:Hash)
-
+    def matches(description_arg_hash)
         keys_matched_counter = 0
 
         if @description == nil
             return true
         else
             for key in @description.keys   #Loop through all keys in self.description
-                if sdescriptionArg.keys.include? key  #if the key is in the description arg
-                    if descriptionArg[key] != @description[key]   #check if the values match, if not return false
+                if description_arg_hash.keys.include? key  #if the key is in the description arg
+                    if description_arg_hash[key] != @description[key]   #check if the values match, if not return false
                         return false
                     end
                     
@@ -83,7 +82,7 @@ class Randomizer
             end
         end
 
-        if keys_matched_counter == descriptionArg.keys.length
+        if keys_matched_counter == description_arg_hash.keys.length
             return true #if it gets here, it means that all the keys in the description arg are in the randomizer description and the values match
         else
             return false

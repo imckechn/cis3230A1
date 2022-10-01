@@ -8,6 +8,7 @@ require_relative "classes/RandomizerContainer"
 require_relative "classes/Cup"
 require_relative "classes/Results"
 require_relative "classes/Bag"
+require_relative "classes/Player"
 
 
 
@@ -71,6 +72,53 @@ else
     puts "Failed"
     fail_counter += 1
 end
+
+puts "Testing the matches function on a matching description"
+randomizer.set_description({"description" => "DescA"})
+if randomizer.matches({"description" => "DescA"})
+    puts "Succeeded"
+else
+    puts "Failed"
+    fail_counter += 1
+end
+
+puts "Testing the matches function on a non-matching description"
+if randomizer.matches({"description" => "DescB"})
+    puts "Failed"
+    fail_counter += 1
+
+else
+    puts "Succeeded"
+end
+
+puts "Removing the description (Setting it to nil) and testing the matches function"
+randomizer.set_description(nil)
+if randomizer.matches({"description" => "DescA"})
+    puts "Succeeded"
+else
+    puts "Failed"
+    fail_counter += 1
+end
+
+puts "Setting the description to be {'description' => 'DescA', 'item' => 'randomizer'}"
+puts "Confirming that it matches with only 1 of the two elements of the description"
+randomizer.set_description({"description" => "DescA", "item" => "randomizer"})
+if randomizer.matches({"description" => "DescA"})
+    puts "Succeeded"
+else
+    puts "Failed"
+    fail_counter += 1
+end
+
+puts "Testing against a description that's the same and has an extra element"
+if randomizer.matches({"description" => "DescA", "item" => "randomizer", "extra" => "element"})
+    
+    puts "Failed"
+    fail_counter += 1
+else
+    puts "Succeeded"
+end
+
 puts "\nThere were #{fail_counter} failure(s) in this section."
 
 
@@ -546,10 +594,72 @@ else
     fail_counter += 1
 end
 
+puts "\nThere were #{fail_counter} failure(s) in this section."
 
 
 #------ TESTING THE PLAYER OBJECT ---------
 puts "TESTING THE PLAYER OBJECT"
+
+puts "Initializing the player. This should not crash"
+player = Player.new("Dave")
+puts "Succeeded"
+
+puts "Getting the players name, it should be Dave"
+name = player.name()
+
+if name == "Dave"
+    puts "Succeeded"
+else
+    puts "Failed"
+    fail_counter += 1
+end
+
+die_2 = Die.new(10, Die_colours[3])
+coin_2 = Coin.new(Denominations[3])
+
+puts "Adding a single die to the players bag"
+puts "If it doesnt crash then it's successful"
+player.store(die_2)
+
+if player.get_num_randomziers() == 1
+    puts "Succeeded"
+else
+    puts "Failed"
+    fail_counter += 1
+end
+
+puts "Adding a batch of 3 coins and die to the players bag"
+puts "If it doesnt crash then it's successful"
+randomizerContainer = RandomizerContainer.new()
+randomizerContainer.store_all([coin_2, die, coin])
+player.move_all(randomizerContainer)
+puts "Succeeded"
+
+puts "The number of randomizers in the players bag should be 4"
+if player.get_num_randomziers() == 4
+    puts "Succeeded"
+else
+    puts "Failed"
+    fail_counter += 1
+end
+
+puts "Moving randomizers to the players cup if the description is 'Fake description'"
+player.load("Fake description")
+count = player.get_num_objects_in_cup()
+if count == 0
+    puts "Succeeded"
+else
+    puts "Failed"
+    fail_counter += 1
+end
+
+
+
+
+
+
+
+puts "\nThere were #{fail_counter} failure(s) in this section."
 
 
 #------ RUNNING TEST GAME SCENARIO 1 ---------
