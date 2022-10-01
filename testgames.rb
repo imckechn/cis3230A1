@@ -7,6 +7,7 @@ require_relative "classes/Hand"
 require_relative "classes/RandomizerContainer"
 require_relative "classes/Cup"
 require_relative "classes/Results"
+require_relative "classes/Bag"
 
 
 
@@ -456,6 +457,7 @@ else
     fail_counter += 1
 end
 
+puts "\nThere were #{fail_counter} failure(s) in this section."
 
 
 #------ TESTING THE CUP OBJECT ---------
@@ -463,12 +465,72 @@ puts "TESTING THE CUP OBJECT"
 
 puts "Initializing the cup. This should not crash"
 cup = Cup.new()
+puts "Succeeded"
+
+puts "Putting items in a hand object, then loading the cup with the hand"
+puts "Returns self, so if it doesnt crash then it's successful"
+hand.store_all([die, coin])
+cup.load(hand)
+puts "Succeeded"
+
+puts "Getting the items back from the hand, then comparing them to the original items"
+puts "Success if they are all returned in the correct order"
+hand = cup.empty()
+
+if hand.next().equal?(coin) && hand.next().equal?(die)
+    puts "Succeeded"
+else
+    puts "Failed"
+    fail_counter += 1
+end
+
+puts "Cup should have nothing in it now"
+if cup.count() == 0
+    puts "Succeeded, cup is empty"
+else
+    puts "Failed"
+    fail_counter += 1
+end
+
+hand.store_all([die, coin])
+cup.load(hand)
+
+puts "Testing the throw function from the cup"
+puts "This should return a results object"
+results = cup.throw()
+
+if results.class == Results
+    puts "Succeeded"
+else
+    puts "Failed"
+    fail_counter += 1
+end
+
+puts "Now checking the sum of the coin and die roll are the same as the results object"
+
+hand = cup.empty()
+coin = hand.next()
+die = hand.next()
+
+if results.sum() == (coin.results() + die.results())
+    puts "Succeeded"
+else
+    puts "Failed"
+    fail_counter += 1
+end
 
 
+puts "\nThere were #{fail_counter} failure(s) in this section."
 
 
 #------ TESTING THE BAG OBJECT ---------
 puts "TESTING THE BAG OBJECT"
+puts "Initializing the bag. This should not crash"
+bag = Bag.new()
+puts "Succeeded"
+
+puts "Putting items in a hand object, then loading the bag with the hand"
+hand.store_all([die, coin])
 
 
 

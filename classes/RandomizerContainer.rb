@@ -11,8 +11,9 @@ class RandomizerContainer
 
     #stores a randomizer in the container
     #returns self (for method chaining)
-    def store(r)
-        @randomizerList.push(r)
+
+    def store(randomizer)
+        @randomizerList.push(randomizer)
         return self
     end
 
@@ -34,7 +35,7 @@ class RandomizerContainer
 
     #remove each randomizer in rc & store it in self
     #returns self (for method chaining)
-    def move_all(rc:RandomizerContainer)
+    def move_all(rc)
         @randomizerList.concat(rc.get_all())
         return self
     end

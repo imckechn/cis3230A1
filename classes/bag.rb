@@ -1,5 +1,5 @@
 require_relative "RandomizerContainer"
-require_relative "hand"
+require_relative "Hand"
 
 class Bag < RandomizerContainer
 
@@ -9,7 +9,7 @@ class Bag < RandomizerContainer
     end
 
     #empties all elements from the Bag into a Hand, which is returned
-    def empty(hand:Hand)
+    def empty(hand)
         hand.store_all(@randomizerList)
         @randomizerList = []
         return self

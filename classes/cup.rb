@@ -1,6 +1,7 @@
 require_relative "RandomizerContainer"
-require_relative "hand"
-require_relative "results"
+require_relative "Hand"
+require_relative "Results"
+require_relative "Cup"
 
 class Cup < RandomizerContainer
 
@@ -11,7 +12,7 @@ class Cup < RandomizerContainer
     
 
     #enters each randomizer from a Hand (synonym of move_all() )
-    def load(hand:Hand)
+    def load(hand)
         @randomizerList.concat(hand.get_all())
         return self
     end
@@ -19,8 +20,9 @@ class Cup < RandomizerContainer
 
     #returns a Hand object to be returned to the bag, and leaves the cup empty
     def empty()
-        hand = hand.new()
-        empty()
+        hand = Hand.new()
+        hand.move_all(self)
+        @randomizerList = []
         return hand
     end
 
@@ -29,7 +31,8 @@ class Cup < RandomizerContainer
     #the results of the thrown randomizers are stored in a newly created Results object, which is returned
     def throw()
         #results needs to be updated
-        results = results.new()
+
+        results = Results.new(Cup.new())
 
         for r in @randomizerList
             r.randomize()
