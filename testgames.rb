@@ -714,14 +714,14 @@ end
 
 puts "2 die to the cup"
 
-player = Player.new("Jane")
-player.store(die_1)
-player.store(die_2)
-player.load({"item" => "die", "colour" => "red", "sides" => 6})
+player_2 = Player.new("Jane")
+player_2.store(die_1)
+player_2.store(die_2)
+player_2.load({"item" => "die", "colour" => "red", "sides" => 6})
 
 puts "Testing the throw method"
 puts "Since there are items in the cup, this should return a results object"
-results = player.throw()
+results = player_2.throw()
 if results.class == Results
     puts "Succeeded"
 else
@@ -731,13 +731,19 @@ end
 
 puts "Calling the tally method"
 puts "This should return an array of length 1 with the results of the throw"
-results = player.tally({"item" => "die", "colour" => "red", "sides" => 6})
+results = player_2.tally({"item" => "die", "colour" => "red", "sides" => 6})
 if results.length == 1
     puts "Succeeded"
 else
     puts "Failed, results.length = #{results.length}"
     fail_counter += 1
 end
+
+puts "Getting the results obj"
+throw_results = player_2.results({"item" => "die", "colour" => "red", "sides" => 6}, 0)
+puts "Throw_results = #{throw_results}"
+
+
 
 
 

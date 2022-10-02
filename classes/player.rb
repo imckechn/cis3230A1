@@ -140,8 +140,12 @@ class Player
     def results(description, throw)
         results_array = []
 
-        for random in @throw_results
-            random.set_description(description)            
+        for random in @throw_results_array
+            random.description(description)
         end
+
+        
+
+        return results_array
     end
 end
