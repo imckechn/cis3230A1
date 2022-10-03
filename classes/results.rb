@@ -49,7 +49,7 @@ class Results
     end
 
 
-    #Counts the items in the that match the description and returns the value
+    #Counts the items in the randomizer that match the description and returns the value
     #If description() has not yet been called, count all randomizers
     def tally()
         counter = 0

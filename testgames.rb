@@ -717,7 +717,7 @@ puts "2 die to the cup"
 player_2 = Player.new("Jane")
 player_2.store(die_1)
 player_2.store(die_2)
-player_2.load({"item" => "die", "colour" => "red", "sides" => 6})
+player_2.load({"item" => "die", "colour" => "red", "sides" => 6}) #Only loads die_1
 
 puts "Testing the throw method"
 puts "Since there are items in the cup, this should return a results object"
@@ -739,30 +739,53 @@ else
     fail_counter += 1
 end
 
-puts "Getting the results obj"
-throw_results = player_2.results({"item" => "die", "colour" => "red", "sides" => 6}, 0)
-puts "Throw_results = #{throw_results}"
 
+puts "Calling the Sum method"
+puts "This should return an array of length 1 with the results of the throw"
+results_sum = player_2.sum({"item" => "die", "colour" => "red", "sides" => 6})
+if results_sum == die_1.results()
+    puts "Succeeded"
+else
+    puts "Failed"
+    fail_counter += 1
+end
 
+puts "Calling the results method"
+puts "Calling it with throw = 0, and a description that will return die_1"
+results_arr = player_2.results({"item" => "die", "colour" => "red", "sides" => 6}, 0)
 
+puts "Results_arr = #{results_arr}"
 
+if results_arr[0][0] == die_1.results()
+    puts "Succeeded"
+else
+    puts "Failed"
+    fail_counter += 1
+end
 
+puts "Calling the results method"
+puts "Calling it with throw = 1, this should return nil since throw has not been called twice"
+results_arr = player_2.results({"item" => "die", "colour" => "red", "sides" => 6}, 1)
+if results_arr != nil
+    puts "Failed"
+    fail_counter += 1
+else
+    puts "Succeeded"
+end
 
+puts "Calling the results method"
+puts "Calling it with throw = 0, but a description that does not match any of the objects in the throw history"
+results_arr = player_2.results({"item" => "die", "colour" => "red", "sides" => 10}, 0)
 
+if results_arr[0].length() > 0
+    puts "Failed"
+    fail_counter += 1
+else
+    puts "Succeeded"
+end
 
 puts "\nThere were #{fail_counter} failure(s) in this section."
 
-
-#------ RUNNING TEST GAME SCENARIO 1 ---------
-puts "TESTING THE PLAYER OBJECT"
-
-
-#------ RUNNING TEST GAME SCENARIO 2 ---------
-
-
-#------ RUNNING TEST GAME SCENARIO 3 ---------
-
-
 #------ FINAL READOUT ---------
 puts "\n\nTESTING COMPLETE"
-puts "There were #{fail_counter} failure(s)."
+puts "There were #{fail_counter} failure(s) in this program."

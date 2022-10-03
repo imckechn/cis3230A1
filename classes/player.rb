@@ -8,8 +8,8 @@ class Player
         @name = name
         @bag = Bag.new()
         @cup = Cup.new()
-        @throw_results = nil
-        @throw_results_array = []
+        @throw_results = nil        #Most recent throw results (result object)
+        @throw_results_array = []   #Array of all past throw results (result onjects)
     end
 
 
@@ -120,13 +120,11 @@ class Player
     #sets the description, and calls sum() on each of the stored results
     #and returns the combined values as an array
     def sum(description)
-
         results_sum = 0
 
-        for random in @throw_results
-            random.set_description(description)
-
-            results_sum += random.sum()
+        for result in @throw_results_array
+            result.description(description)
+            results_sum += result.sum()
         end
 
         return results_sum
@@ -138,13 +136,16 @@ class Player
     #If a throw is requested that doesn’t exist (too far back in time and never occurred), return nil
     #Here a “throw” is short for “the result of a given throw”
     def results(description, throw)
-        results_array = []
 
-        for random in @throw_results_array
-            random.description(description)
+        if throw + 1 > @throw_results_array.length()
+            return nil
         end
 
-        
+        results_array = []
+        for i in 0..throw  
+            @throw_results_array[i].description(description)
+            results_array.push(@throw_results_array[i].results())
+        end
 
         return results_array
     end
