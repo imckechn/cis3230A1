@@ -30,8 +30,12 @@ class Cup < RandomizerContainer
         results = Results.new(Cup.new())
 
         @randomizer_list.each do |randomizer|
-            randomizer.randomize
-            results.store(randomizer)
+            randomizer_2 = Randomizer.new()
+            randomizer_2.set_description(nil)
+            randomizer_2.set_description(randomizer.get_description)
+
+            randomizer_2.randomize
+            results.store(randomizer_2)
         end
 
         results

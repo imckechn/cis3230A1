@@ -9,9 +9,6 @@ class Player
         @bag = Bag.new()
         @cup = Cup.new()
 
-        @throw_results = nil
-        # Most recent throw results (result object)
-
         @throw_results_array = []
         # Array of all past throw results (result onjects)
     end
@@ -91,15 +88,17 @@ class Player
         # If there is nothing loaded in the cup, return nil
         nil if @cup.count.equal?(0)
 
-        @throw_results = @cup.throw
-        @throw_results_array.push(@throw_results)
-        @throw_results
+        @cup = @cup.dup
+
+        throw_res = @cup.throw.clone
+
+        @throw_results_array.push(throw_res)
+        throw_res
     end
 
     # Clears all stored results
     # Returns self (for method chaining)
     def clear
-        @throw_results = nil
         @throw_results_array = []
         self
     end

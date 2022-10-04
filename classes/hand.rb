@@ -9,7 +9,6 @@ class Hand < RandomizerContainer
     # Removes and returns the last objected added to the hand
     # If no objects are in the hand, return nil
     def next
-
         if count() > 0
             @randomizer_list.pop
         else

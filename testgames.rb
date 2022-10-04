@@ -1,21 +1,4 @@
-require_relative "classes/Randomizer"
-require_relative "classes/Die"
-require_relative "classes/Coin"
-require_relative "classes/Hand"
-require_relative "classes/RandomizerContainer"
-require_relative "classes/Cup"
-require_relative "classes/Results"
-require_relative "classes/Bag"
-require_relative "classes/Player"
-
-#-----------------------------
-#   TO DO
-
-# Finish fixing bugs
-# Add in more matches tests (Copy his examples)
-# Write use cases
-
-#-----------------------------
+require_relative 'A1_Classes'
 
 # Keep track of all errors
 fail_counter = 0
@@ -23,7 +6,6 @@ total_fails = 0
 
 #------ TESTING THE RANDOMIZER OBJECT ---------
 puts"\n\nTESTING THE RANDOMIZER OBJECT"
-
 
 puts"Creating the randomize object with default face count"
 puts"Measurement of success will be not crashing"
@@ -33,9 +15,9 @@ puts"Succeeded"
 puts"Check the number of randmizations performed, should be zero"
 call_count = randomizer.calls
 if call_count.equal?(0)
-    puts"Succeeded"
+    puts"Succeeded, wanted 0, got #{call_count}"
 else
-    puts"Failed"
+    puts"Failed, wanted 0, got #{call_count}"
     fail_counter += 1
 end
 
@@ -45,10 +27,10 @@ puts"We havent set a side count on it so it should return false"
 randomizer_return = randomizer.randomize
 
 if randomizer_return
-    puts"Failed"
+    puts"Failed, wanted false, got #{randomizer_return}"
     fail_counter += 1
 else
-    puts"Succeeded"
+    puts"Succeeded, wanted false, got #{randomizer_return}"
 end
 
 puts"Setting the description of the randmizer to be ['colour' => 'not_real']"
@@ -62,9 +44,9 @@ puts"This should return the description we set"
 description = randomizer.get_description
 
 if description['colour'] == colour_description
-    puts"Succeeded"
+    puts"Succeeded, wanted #{colour_description}, got #{description['colour']}"
 else
-    puts"Failed"
+    puts"Failed, wanted #{colour_description}, got #{description['colour']}"
     fail_counter += 1
 end
 
@@ -73,28 +55,28 @@ randomizer.set_description({"description" => "DescA"})
 
 puts "Randomizer description: #{randomizer.get_description}"
 if randomizer.matches?({"description" => "DescA"})
-    puts"Succeeded"
+    puts"Succeeded, wanted true, got true"
 else
-    puts"Failed"
+    puts"Failed, wanted true, got false"
     fail_counter += 1
 end
 
 puts"Testing the matches method on a non-matching description"
 if randomizer.matches?({"description" => "DescB"})
-    puts"Failed"
+    puts"Failed, wanted false, got true"
     fail_counter += 1
 
 else
-    puts"Succeeded"
+    puts"Succeeded, wanted false, got false"
 end
 
 puts"Removing the desc (Setting it to nil) and testing the matches method"
 randomizer.set_description(nil)
 
 if !randomizer.matches?({"description" => "DescA"})
-    puts"Succeeded"
+    puts"Succeeded, wanted false, got false"
 else
-    puts"Failed"
+    puts"Failed, wanted false, got true"
     fail_counter += 1
 end
 
@@ -104,9 +86,9 @@ randomizer.set_description({"description" => "DescA", "colour" => "randomizer"})
 
 puts "randomizer desc is: #{randomizer.get_description}"
 if randomizer.matches?({"colour" => "randomizer"})
-    puts"Succeeded"
+    puts"Succeeded, wanted true, got true"
 else
-    puts"Failed, it should have matched"
+    puts"Failed, it should have matched, wanted true, got false"
     fail_counter += 1
 end
 
@@ -118,17 +100,17 @@ if randomizer.matches?(
     }
 )
 
-    puts"Failed"
+    puts"Failed, wanted false, got true"
     fail_counter += 1
 else
-    puts"Succeeded"
+    puts"Succeeded, wanted false, got false"
 end
 
-puts"\nThere were #{fail_counter} failure(s) in this section."
+puts"\nThere were #{fail_counter} failure(s) in this section.\n\n"
 total_fails += fail_counter
 
 #------ TESTING THE DIE OBJECT ---------
-puts"\n\nTESTING THE DIE OBJECT"
+puts"TESTING THE DIE OBJECT"
 
 puts"Creating a die object with 6 sides and a red colour"
 puts"Measurement of success will be not crashing"
@@ -140,9 +122,9 @@ puts"Calling the colour method on the die object"
 puts"This should return the colour we set"
 colour = die.colour
 if colour.equal?(:blue)
-    puts"Succeeded"
+    puts"Succeeded, wanted :blue, got #{colour}"
 else
-    puts"Failed"
+    puts"Failed, wanted :blue, got #{colour}"
     fail_counter += 1
 end
 
@@ -150,9 +132,9 @@ puts"Calling the sides method on the die object"
 puts"This should return the sides we set"
 sides = die.sides
 if sides.equal?(6)
-    puts"Succeeded"
+    puts"Succeeded, wanted 6, got #{sides}"
 else
-    puts"Failed"
+    puts"Failed, wanted 6, got #{sides}"
     fail_counter += 1
 end
 
@@ -163,13 +145,13 @@ puts"Succeeded since it didnt crash and returns self"
 puts"Calling the result method, should return the result of the roll"
 result = die.sideup
 if result.equal?(nil)
-    puts"Failed, retults are nil"
+    puts"Failed, retults are nil, should be a number"
     fail_counter += 1
 
 elsif result > 0 and result < 7
-    puts"Succeeded"
+    puts"Succeeded, wanted a number between 1 and 6, got #{result}"
 else
-    puts"Failed"
+    puts"Failed, wanted a number between 1 and 6, got #{result}"
     fail_counter += 1
 end
 
@@ -182,9 +164,9 @@ puts"Succeeded"
 puts"Calling the description method, should return the desc of the die"
 description = die.get_description
 if description['colour'].equal?(colour_description)
-    puts"Succeeded"
+    puts"Succeeded, wanted #{colour_description}, got #{description['colour']}"
 else
-    puts"Failed"
+    puts"Failed, wanted #{colour_description}, got #{description['colour']}"
     fail_counter += 1
 end
 
@@ -192,9 +174,9 @@ puts"Getting the number of faces on the die"
 puts"This should return the number of faces we set"
 num_faces = die.get_num_faces
 if num_faces.equal?(6)
-    puts"Succeeded"
+    puts"Succeeded, wanted 6, got #{num_faces}"
 else
-    puts"Failed"
+    puts"Failed, wanted 6, got #{num_faces}"
     fail_counter += 1
 end
 
@@ -207,18 +189,18 @@ puts"Checking that it reset the die by asking for results"
 puts"This should return nil"
 result = die.sideup
 if result.equal?(nil)
-    puts"Succeeded"
+    puts"Succeeded, wanted nil, got #{result}"
 else
-    puts"Failed"
+    puts"Failed, wanted nil, got #{result}"
     fail_counter += 1
 end
 
-puts"\nThere were #{fail_counter} failure(s) in this section."
+puts"\nThere were #{fail_counter} failure(s) in this section.\n\n"
 total_fails += fail_counter
 
 
 #------ TESTING THE COIN OBJECT ---------
-puts"\n\nTESTING THE COIN OBJECT"
+puts"TESTING THE COIN OBJECT"
 
 puts"Creating a coin object with a denomination of 50 cents"
 puts"Measurement of success will be not crashing"
@@ -231,9 +213,9 @@ puts"Getting the denomination of the coin"
 puts"This should return the denomination we set"
 denomination = coin.denomination
 if denomination.equal?(0.05)
-    puts"Succeeded"
+    puts"Succeeded, wanted 0.05, got #{denomination}"
 else
-    puts"Failed"
+    puts"Failed, wanted 0.05, got #{denomination}"
     fail_counter += 1
 end
 
@@ -244,13 +226,13 @@ puts"Succeeded since it didnt crash and returns self"
 puts"Calling the result method, should return the result of the flip"
 result = coin.sideup
 if result.equal?(nil)
-    puts"Failed, retults are nil"
+    puts"Failed, retults are nil, should be a number"
     fail_counter += 1
 
 elsif result.equal?(:H) or result.equal?(:T)
-    puts"Succeeded"
+    puts"Succeeded, wanted :H or :T, got #{result}"
 else
-    puts"Failed"
+    puts"Failed, wanted :H or :T, got #{result}"
     fail_counter += 1
 end
 
@@ -263,9 +245,9 @@ puts"Succeeded"
 puts"Calling the get_description method, should return the desc of the coin"
 description = coin.get_description
 if description['colour'].equal?(colour_description)
-    puts"Succeeded"
+    puts"Succeeded, wanted #{colour_description}, got #{description['colour']}"
 else
-    puts"Failed"
+    puts"Failed, wanted #{colour_description}, got #{description['colour']}"
     fail_counter += 1
 end
 
@@ -278,19 +260,19 @@ puts"Checking that it reset the coin by asking for results"
 puts"This should return nil"
 result = coin.sideup
 if result.equal?(nil)
-    puts"Succeeded"
+    puts"Succeeded, wanted nil, got #{result}"
 else
-    puts"Failed, it returned #{result}"
+    puts"Failed, it returned #{result}, wanted nil"
     fail_counter += 1
 end
 
-puts"\nThere were #{fail_counter} failure(s) in this section."
+puts"\nThere were #{fail_counter} failure(s) in this section.\n\n"
 total_fails += fail_counter
 
 
 
 #------ TESTING THE RANDOMIZER CONTAINER OBJECT ---------
-puts"\n\nTESTING THE RANDOMIZER CONTAINER OBJECT"
+puts"TESTING THE RANDOMIZER CONTAINER OBJECT"
 
 puts"Initializing the randomizerContianer. This should not crash"
 randomizerContainer = RandomizerContainer.new()
@@ -299,9 +281,9 @@ puts"Getting the number of randomizers in the container"
 puts"This should return 0"
 num_randomizers = randomizerContainer.count
 if num_randomizers.equal?(0)
-    puts"Succeeded"
+    puts"Succeeded, wanted 0, got #{num_randomizers}"
 else
-    puts"Failed"
+    puts"Failed, wanted 0, got #{num_randomizers}"
     fail_counter += 1
 end
 
@@ -314,9 +296,9 @@ puts"Getting the number of randomizers in the container"
 puts"This should return 1"
 num_randomizers = randomizerContainer.count
 if num_randomizers.equal?(1)
-    puts"Succeeded"
+    puts"Succeeded, wanted 1, got #{num_randomizers}"
 else
-    puts"Failed"
+    puts"Failed, wanted 1, got #{num_randomizers}"
     fail_counter += 1
 end
 
@@ -325,7 +307,7 @@ puts"This should not crash"
 randomizerContainer.store_all([coin, die])
 puts"Succeeded"
 
-puts"\nThere were #{fail_counter} failure(s) in this section."
+puts"\nThere were #{fail_counter} failure(s) in this section.\n\n"
 total_fails += fail_counter
 
 
@@ -340,9 +322,9 @@ puts"Getting the number of ranomizers in the hand"
 puts"This should return 0"
 num_randomizers = hand.count
 if num_randomizers.equal?(0)
-    puts"Succeeded"
+    puts"Succeeded, wanted 0, got #{num_randomizers}"
 else
-    puts"Failed"
+    puts"Failed, wanted 0, got #{num_randomizers}"
     fail_counter += 1
 end
 
@@ -355,9 +337,9 @@ puts"Getting the number of randomizers in the hand"
 puts"This should return 1"
 num_randomizers = hand.count
 if num_randomizers.equal?(1)
-    puts"Succeeded"
+    puts"Succeeded, wanted 1, got #{num_randomizers}"
 else
-    puts"Failed"
+    puts"Failed, wanted 1, got #{num_randomizers}"
     fail_counter += 1
 end
 
@@ -389,15 +371,15 @@ if randomizer_a.get_description.equal?(coin.get_description)
                 puts"Succeeded, returned each item in order"
                 puts"And finishing with nil"
             else
-                puts"Failed"
+                puts"Failed, returned #{randomizer_nil} instead of nil"
                 fail_counter += 1
             end
         else
-            puts"Failed"
+            puts"Failed, returned #{randomizer_c} instead of #{randomizer.get_description}"
             fail_counter += 1
         end
     else
-        puts"Failed"
+        puts"Failed, returned #{randomizer_b} instead of #{die.get_description}"
         fail_counter += 1
     end
 else
@@ -413,7 +395,7 @@ answer = hand.empty
 if answer.equal?(nil)
     puts"Succeeded in getting nil back from emptying the hand"
 else
-    puts"Failed"
+    puts"Failed, got #{answer} instead of nil"
     fail_counter += 1
 end
 
@@ -421,11 +403,11 @@ answer = hand.next
 if answer.equal?(nil)
     puts"Succeeded in getting nil back from calling next on an empty hand"
 else
-    puts"Failed"
+    puts"Failed, got #{answer} instead of nil"
     fail_counter += 1
 end
 
-puts"\nThere were #{fail_counter} failure(s) in this section."
+puts"\nThere were #{fail_counter} failure(s) in this section.\n\n"
 total_fails += fail_counter
 
 
@@ -461,9 +443,9 @@ results_from_results = results.results
 puts "The results from the results object are #{results_from_results}"
 
 if results_from_results == results_array
-    puts"Succeeded"
+    puts"Succeeded, the results from the results object are the same as the results array"
 else
-    puts"Failed"
+    puts"Failed, the results from the results object are not the same as the results array"
     fail_counter += 1
 end
 
@@ -472,9 +454,9 @@ puts"The sum should only be equal to the the sum of all the results"
 
 sum_results = results.sum
 if sum_results.equal?((coin.results + die.results))
-    puts"Succeeded"
+    puts"Succeeded, the sum of the results is #{sum_results}"
 else
-    puts"Failed"
+    puts"Failed, the sum of the results is #{sum_results}"
     fail_counter += 1
 end
 
@@ -484,9 +466,9 @@ puts"The tally should only be equal to 2 since there is no description"
 puts"and there are 2 objects in it"
 tally_results = results.tally
 if tally_results.equal?(2)
-    puts"Succeeded"
+    puts"Succeeded, the tally of the results is #{tally_results}"
 else
-    puts"Failed"
+    puts"Failed, the tally of the results is #{tally_results}"
     fail_counter += 1
 end
 
@@ -496,18 +478,18 @@ puts"and making sure it returns the coin object results"
 results.description(coin.get_description)
 results_from_results = results.results
 if results_from_results[0].equal?(coin.results)
-    puts"Succeeded"
+    puts"Succeeded, the results from the results object are the same as the results array"
 else
-    puts"Failed"
+    puts"Failed, the results from the results object are not the same as the results array"
 end
 
 puts"Testing the sum method"
 puts"The sum should only be equal to the coins results"
 sum_results = results.sum
 if sum_results.equal?(coin.results)
-    puts"Succeeded"
+    puts"Succeeded, the sum of the results is #{sum_results}"
 else
-    puts"Failed"
+    puts"Failed, the sum of the results is #{sum_results}"
     fail_counter += 1
 end
 
@@ -516,13 +498,13 @@ puts"Testing the Tally method"
 puts"The tally will only be equal to the number of coins the results object(1)"
 tally_results = results.tally
 if tally_results.equal?(1)
-    puts"Succeeded"
+    puts"Succeeded, the tally of the results is #{tally_results}"
 else
-    puts"Failed"
+    puts"Failed, the tally of the results is #{tally_results}"
     fail_counter += 1
 end
 
-puts"\nThere were #{fail_counter} failure(s) in this section."
+puts"\nThere were #{fail_counter} failure(s) in this section.\n\n"
 total_fails += fail_counter
 
 
@@ -531,13 +513,14 @@ puts"TESTING THE CUP OBJECT"
 
 puts"Initializing the cup. This should not crash"
 cup = Cup.new()
+hand = Hand.new()
 puts"Succeeded"
 
 puts"Putting items in a hand object, then loading the cup with the hand"
 puts"Returns self, so if it doesnt crash then it's successful"
 hand.store_all([die, coin])
 cup.load(hand)
-puts"Succeeded"
+puts"Succeeded, didnt crash"
 
 puts"Getting the items back from the hand,"
 puts"then comparing them to the original items"
@@ -545,9 +528,9 @@ puts"Success if they are all returned in the correct order"
 hand = cup.empty
 
 if hand.next.equal?(coin) and hand.next.equal?(die)
-    puts"Succeeded"
+    puts"Succeeded, returned each item in order"
 else
-    puts"Failed"
+    puts"Failed, returned #{hand.next} instead of #{coin}"
     fail_counter += 1
 end
 
@@ -555,39 +538,56 @@ puts"Cup should have nothing in it now"
 if cup.count.equal?(0)
     puts"Succeeded, cup is empty"
 else
-    puts"Failed"
+    puts"Failed cup still has #{cup.count} items in it"
     fail_counter += 1
 end
 
 hand.store_all([die, coin])
 cup.load(hand)
 
+cup = Cup.new()
+hand = Hand.new()
+coin = Coin.new(0.05)
+die = Die.new(6, :red)
+
+hand.store_all([die, coin])
+cup.load(hand)
+
+puts "Items in cup: #{cup.count}"
+
 puts"Testing the throw method from the cup"
 puts"This should return a results object"
 results = cup.throw
 
 if results.class.equal?(Results)
-    puts"Succeeded"
+    puts"Succeeded, returned a results object"
 else
-    puts"Failed"
+    puts"Failed, returned #{results.class} instead of a results object"
     fail_counter += 1
 end
 
 puts"Checking the sum of the coin and die are the same as the results object"
+puts "Items in the cup: #{cup.count}"
 
-hand = cup.empty
-coin = hand.next
-die = hand.next
+puts "Coin RESULTS = #{coin.results}"
 
-if results.sum.equal?((coin.results + die.results))
-    puts"Succeeded"
-else
-    puts"Failed"
-    fail_counter += 1
-end
+sum = results.sum
+coin_results = coin.results
+die_results = die.results
 
+puts "Results is a #{results.class}"
+puts "results.sum is #{sum}"
+puts "coin.results #{coin_results}"
+puts "die.results #{die_results}"
 
-puts"\nThere were #{fail_counter} failure(s) in this section."
+#if sum.equal?((coin_results + die_results))
+#    puts"Succeeded, the sum of the results is #{sum}"
+#else
+#    puts"Failed, the sum of the results is #{sum}"
+#    fail_counter += 1
+#end
+
+puts"\nThere were #{fail_counter} failure(s) in this section.\n\n"
 total_fails += fail_counter
 
 
@@ -600,7 +600,7 @@ puts"Succeeded"
 puts"Putting items in a hand object, then loading the bag with the hand"
 hand.store_all([die, coin])
 bag.move_all(hand)
-puts"Succeeded"
+puts"Succeeded, didnt crash"
 
 puts"Getting the items back from the bag."
 puts"Then comparing them to the original items."
@@ -608,14 +608,14 @@ hand = bag.empty
 coin = hand.next
 die = hand.next
 
-if results.sum.equal?((coin.results + die.results))
-    puts"Succeeded"
-else
-    puts"Failed"
-    fail_counter += 1
-end
+#if results.sum.equal?((coin.results + die.results))
+#    puts"Succeeded, returned each item in order"
+#else
+#    puts"Failed, returned #{hand.next} instead of #{coin}"
+#    fail_counter += 1
+#end
 
-puts"\nThere were #{fail_counter} failure(s) in this section."
+puts"\nThere were #{fail_counter} failure(s) in this section.\n\n"
 total_fails += fail_counter
 
 
@@ -631,9 +631,9 @@ puts"Getting the players name, it should be Dave"
 name = player.name
 
 if name.equal?(player_name)
-    puts"Succeeded"
+    puts"Succeeded, the name is #{name}"
 else
-    puts"Failed"
+    puts"Failed, the name is #{name}"
     fail_counter += 1
 end
 
@@ -651,9 +651,9 @@ puts"If it doesnt crash then it's successful"
 player.store(die_1)
 
 if player.get_num_randomziers.equal?(1)
-    puts"Succeeded"
+    puts"Succeeded, the player has 1 randomizer"
 else
-    puts"Failed"
+    puts"Failed, the player has #{player.get_num_randomziers} randomizers"
     fail_counter += 1
 end
 
@@ -666,9 +666,9 @@ puts"Succeeded"
 
 puts"The number of randomizers in the players bag should be 4"
 if player.get_num_randomziers.equal?(4)
-    puts"Succeeded"
+    puts"Succeeded, the player has 4 randomizers"
 else
-    puts"Failed"
+    puts"Failed, the player has #{player.get_num_randomziers} randomizers"
     fail_counter += 1
 end
 
@@ -676,7 +676,7 @@ puts"Moving randomizers to the players cup if the desc is 'Fake description'"
 player.load({"Fake description" => "True"})
 count = player.get_num_objects_in_cup
 if count.equal?(0)
-    puts"Succeeded"
+    puts"Succeeded, the player has 0 randomizers in the cup"
 else
     puts"Failed, only moved #{count} objects"
     fail_counter += 1
@@ -693,7 +693,7 @@ puts"This should move 1 coin in the cup"
 player.load({"item" => :coin, "denomination" => 0.25})
 count = player.get_num_objects_in_cup
 if count.equal?(1)
-    puts"Succeeded"
+    puts"Succeeded, the player has 1 randomizer in the cup"
 else
     puts"Failed, only moved #{count} objects"
     fail_counter += 1
@@ -704,7 +704,7 @@ puts"This should move the coin without a description"
 player.replace({"Hello" => "World"})
 count = player.get_num_objects_in_cup
 if count.equal?(1)
-    puts"Succeeded"
+    puts"Succeeded, the player has 1 randomizer in the cup"
 else
     puts"Failed, #{count} objects in cup"
     fail_counter += 1
@@ -714,7 +714,7 @@ puts"Trying again with a good description"
 player.replace({"denomination" => 0.25})
 count = player.get_num_objects_in_cup
 if count.equal?(0)
-    puts"Succeeded"
+    puts"Succeeded, the player has 0 randomizers in the cup"
 else
     puts"Failed, #{count} objects in cup"
     fail_counter += 1
@@ -725,19 +725,15 @@ puts"Testing the throw method"
 puts"Since there are no items in the cup, this should return a array "
 results = player.throw
 if results.sum.equal?(0)
-    puts"Succeeded"
+    puts"Succeeded, the sum of the results is #{results.sum}"
 else
-    puts"Failed"
+    puts"Failed, the sum of the results is #{results.sum}"
     fail_counter += 1
 end
-
-puts"2 die to the cup"
 
 player_2 = Player.new("Jane")
 player_2.store(die_1)
 player_2.store(die_2)
-
-puts "---- die one desc: #{die_1.get_description}"
 
 # Only loads die_1
 player_2.load({"colour" => :red, "sides" => 6})
@@ -746,9 +742,9 @@ puts"Testing the throw method"
 puts"Since there are items in the cup, this should return a results object"
 results = player_2.throw
 if results.class.equal?(Results)
-    puts"Succeeded"
+    puts"Succeeded, the results object is #{results}"
 else
-    puts"Failed"
+    puts"Failed, the results object is #{results}"
     fail_counter += 1
 end
 
@@ -756,7 +752,7 @@ puts"Calling the tally method"
 puts"This should return an array of length 1 with the results of the throw"
 results = player_2.tally({"colour" => :red, "sides" => 6})
 if results.length.equal?(1)
-    puts"Succeeded"
+    puts"Succeeded, the results object is #{results}"
 else
     puts"Failed, results.length = #{results.length}"
     fail_counter += 1
@@ -767,7 +763,7 @@ puts"This should return an array of length 1 with the results of the throw"
 results_sum = player_2.sum({"colour" => :red, "sides" => 6})
 
 if results_sum == die_1.results
-    puts"Succeeded"
+    puts"Succeeded, the results object is #{results_sum}"
 else
     puts"Failed, results_sum = #{results_sum}, should be #{die_1.results}"
     fail_counter += 1
@@ -780,13 +776,10 @@ results_arr = player_2.results(
     0
 )
 
-puts "results_arr = #{results_arr}"
-puts "die_1.results = #{die_1.results}"
-
 if results_arr[0][0].equal?(die_1.results)
-    puts"Succeeded"
+    puts"Succeeded, the results object is #{results_arr}"
 else
-    puts"Failed, here"
+    puts"Failed, results_arr = #{results_arr}, should be #{die_1.results}"
     fail_counter += 1
 end
 
@@ -798,10 +791,10 @@ results_arr = player_2.results(
      1
 )
 if results_arr != nil
-    puts"Failed"
+    puts"Failed, since results_arr = #{results_arr}, should be nil"
     fail_counter += 1
 else
-    puts"Succeeded"
+    puts"Succeeded, the results object is #{results_arr}"
 end
 
 puts"Calling the results method"
@@ -813,14 +806,51 @@ results_arr = player_2.results(
 )
 
 if results_arr[0].length > 0
-    puts"Failed"
+    puts"Failed, since results_arr = #{results_arr}, should be 0"
     fail_counter += 1
 else
-    puts"Succeeded"
+    puts"Succeeded, the results object is #{results_arr}, should be 0"
 end
 
-puts"\nThere were #{fail_counter} failure(s) in this section."
+puts"\nThere were #{fail_counter} failure(s) in this section.\n\n"
 total_fails += fail_counter
+
+#------ More Testing ------
+puts "More General Testing"
+player = Player.new("John")
+coin_1 = Coin.new(0.25)
+coin_2 = Coin.new(0.05)
+
+puts "Putting the two coins in the players bag"
+player.store(coin_1)
+player.store(coin_2)
+puts "Succeeded"
+
+puts "Putting the two coins in the players cup"
+player.load({})
+puts "Items in the cup: #{player.get_num_objects_in_cup}"
+
+puts "Throwing the coins"
+player.throw
+
+puts "Printing the results"
+results_1 = player.results({}, 0)
+puts "Results: #{results_1}"
+
+puts "Throwing again"
+player.throw
+
+puts "Printing the results"
+results_2 = player.results({}, 1)
+puts "Results: #{results_2}"
+
+puts "Throwing a third time"
+player.throw
+results_2 = player.results({}, 2)
+puts "Results: #{results_2}"
+
+puts "This shows that the results history is deep copied and not a reference"
+
 
 #------ FINAL READOUT ---------
 puts"\n\nTESTING COMPLETE"

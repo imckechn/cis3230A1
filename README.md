@@ -10,3 +10,7 @@ It's a game where a player can put either (or both) dice and a coin into a hand,
 ### Asumptions
 In player.rb
 If you move objects between the bag and the cup and vise versa, if the coin/die doesnt have a description, it will automatically be counted
+
+
+### Also
+I my randomizer.results broke right before I was supposed to submit. This is cause my SUM and possibly Tally function to fail. Please be aware as the tally adn sum methods work, but they rely on the results function and it's broken. This makes results appear broken. Thanks and hope this helps.

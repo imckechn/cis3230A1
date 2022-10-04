@@ -1,0 +1,267 @@
+TESTING THE RANDOMIZER OBJECT
+Creating the randomize object with default face count
+Measurement of success will be not crashing
+Succeeded
+Check the number of randmizations performed, should be zero
+Succeeded, wanted 0, got 0
+Calling randomize on the randomzier object
+We havent set a side count on it so it should return false
+Succeeded, wanted false, got false
+Setting the description of the randmizer to be ['colour' => 'not_real']
+This wont return anything so it will only fail if it crashes
+Succeeded
+Calling get_description on the randomizer object
+This should return the description we set
+Succeeded, wanted not_real, got not_real
+Testing the matches method on a matching description
+Randomizer description: {"up"=>nil, "call_count"=>0, "sides"=>-1, "colour"=>"not_real", "description"=>"DescA"}
+Succeeded, wanted true, got true
+Testing the matches method on a non-matching description
+Succeeded, wanted false, got false
+Removing the desc (Setting it to nil) and testing the matches method
+Succeeded, wanted false, got false
+Setting desc to be {'description' => 'DescA', 'colour' => 'randomizer'}
+Confirming that it matches with only 1 of the two elements of the desc
+randomizer desc is: {"description"=>"DescA", "colour"=>"randomizer"}
+Succeeded, wanted true, got true
+Testing against a description that's the same and has an extra element
+Succeeded, wanted false, got false
+
+There were 0 failure(s) in this section.
+
+TESTING THE DIE OBJECT
+Creating a die object with 6 sides and a red colour
+Measurement of success will be not crashing
+This is because init returns nothing
+Succeeded
+Calling the colour method on the die object
+This should return the colour we set
+Succeeded, wanted :blue, got blue
+Calling the sides method on the die object
+This should return the sides we set
+Succeeded, wanted 6, got 6
+Calling the roll method, should return self on success
+Succeeded since it didnt crash and returns self
+Calling the result method, should return the result of the roll
+Succeeded, wanted a number between 1 and 6, got 6
+Calling the set_description method, should set the desc of the die
+This wont return anything so it will only fail if it crashes
+Succeeded
+Calling the description method, should return the desc of the die
+Succeeded, wanted die, got die
+Getting the number of faces on the die
+This should return the number of faces we set
+Succeeded, wanted 6, got 6
+Calling the rese method, should reset the die
+This wont return anything so it will only fail if it crashes
+Succeeded in calling reset
+Checking that it reset the die by asking for results
+This should return nil
+Succeeded, wanted nil, got 
+
+There were 0 failure(s) in this section.
+
+TESTING THE COIN OBJECT
+Creating a coin object with a denomination of 50 cents
+Measurement of success will be not crashing
+This is because init doesnt return anything
+Succeeded
+Getting the denomination of the coin
+This should return the denomination we set
+Succeeded, wanted 0.05, got 0.05
+Calling the flip method, should return self on success
+Succeeded since it didnt crash and returns self
+Calling the result method, should return the result of the flip
+Succeeded, wanted :H or :T, got H
+Calling the set_description method, should set the desc of the coin
+This wont return anything so it will only fail if it crashes
+Succeeded
+Calling the get_description method, should return the desc of the coin
+Succeeded, wanted 0.05, got 0.05
+Calling the reset method, should reset the coin
+This wont return anything so it will only fail if it crashes
+Succeeded in calling reset
+Checking that it reset the coin by asking for results
+This should return nil
+Succeeded, wanted nil, got 
+
+There were 0 failure(s) in this section.
+
+TESTING THE RANDOMIZER CONTAINER OBJECT
+Initializing the randomizerContianer. This should not crash
+Getting the number of randomizers in the container
+This should return 0
+Succeeded, wanted 0, got 0
+Adding a randomizer to the container
+This should not crash
+Succeeded
+Getting the number of randomizers in the container
+This should return 1
+Succeeded, wanted 1, got 1
+Adding a list of randomizers of length 2 to the container
+This should not crash
+Succeeded
+
+There were 0 failure(s) in this section.
+
+TESTING THE HAND OBJECT
+Initializing the hand. This should not crash
+Succeeded
+Getting the number of ranomizers in the hand
+This should return 0
+Succeeded, wanted 0, got 0
+Adding a randomizer to the hand
+This should not crash
+Succeeded
+Getting the number of randomizers in the hand
+This should return 1
+Succeeded, wanted 1, got 1
+Getting the randomizer back from the hand
+This will return the randomizer we added
+Succeeded
+Adding 3 randomizers to the hand
+Then confirming we get them back in the order we put them in
+Succeeded, returned each item in order
+And finishing with nil
+Adding a randomizer to the hand, empyting the hand
+Then confirming we get nil back and the hand is empty
+Succeeded in getting nil back from emptying the hand
+Succeeded in getting nil back from calling next on an empty hand
+
+There were 0 failure(s) in this section.
+
+TESTING THE RESULTS OBJECT
+Initializing the results. This should not crash
+Succeeded
+Storing 3 randomizers in the results object
+Succeeded in storing both randomizers (Dice and Coin)
+Now getting the results of all the randomizers
+The results of the randomizers before adding them to the array were
+[1, 1] so it will succeeed if it returns the same thing
+The results from the results object are [1, 1]
+Succeeded, the results from the results object are the same as the results array
+Testing the sum method
+The sum should only be equal to the the sum of all the results
+Succeeded, the sum of the results is 2
+Testing the Tally method
+The tally should only be equal to 2 since there is no description
+and there are 2 objects in it
+Succeeded, the tally of the results is 2
+Adding a good description to the array
+and making sure it returns the coin object results
+Succeeded, the results from the results object are the same as the results array
+Testing the sum method
+The sum should only be equal to the coins results
+Succeeded, the sum of the results is 1
+Testing the Tally method
+The tally will only be equal to the number of coins the results object(1)
+Succeeded, the tally of the results is 1
+
+There were 0 failure(s) in this section.
+
+TESTING THE CUP OBJECT
+Initializing the cup. This should not crash
+Succeeded
+Putting items in a hand object, then loading the cup with the hand
+Returns self, so if it doesnt crash then it's successful
+Succeeded, didnt crash
+Getting the items back from the hand,
+then comparing them to the original items
+Success if they are all returned in the correct order
+Succeeded, returned each item in order
+Cup should have nothing in it now
+Succeeded, cup is empty
+Items in cup: 2
+Testing the throw method from the cup
+This should return a results object
+Succeeded, returned a results object
+Checking the sum of the coin and die are the same as the results object
+Items in the cup: 2
+Coin RESULTS = 
+Results is a Results
+results.sum is 4
+coin.results 
+die.results 
+
+There were 0 failure(s) in this section.
+
+TESTING THE BAG OBJECT
+Initializing the bag. This should not crash
+Succeeded
+Putting items in a hand object, then loading the bag with the hand
+Succeeded, didnt crash
+Getting the items back from the bag.
+Then comparing them to the original items.
+
+There were 0 failure(s) in this section.
+
+TESTING THE PLAYER OBJECT
+Initializing the player. This should not crash
+Succeeded
+Getting the players name, it should be Dave
+Succeeded, the name is Dave
+Adding a single die to the players bag
+If it doesnt crash then it's successful
+Succeeded, the player has 1 randomizer
+Adding a batch of 3 coins and die to the players bag
+If it doesnt crash then it's successful
+Succeeded
+The number of randomizers in the players bag should be 4
+Succeeded, the player has 4 randomizers
+Moving randomizers to the players cup if the desc is 'Fake description'
+Succeeded, the player has 0 randomizers in the cup
+adding an object with no description to the players bag
+Succeeded
+Moving randomizers to the players cup if the desc is:
+'{'item' => :coin, 'denomination' => 0.25}'
+This should move 1 coin in the cup
+Succeeded, the player has 1 randomizer in the cup
+Trying to move the objects back from the cup to the bag with a bad desc
+This should move the coin without a description
+Succeeded, the player has 1 randomizer in the cup
+Trying again with a good description
+Succeeded, the player has 0 randomizers in the cup
+Testing the throw method
+Since there are no items in the cup, this should return a array 
+Succeeded, the sum of the results is 0
+Testing the throw method
+Since there are items in the cup, this should return a results object
+Succeeded, the results object is Results: , [#<Randomizer:0x000000013c02cff0 @has_been_rolled=true, @description={"up"=>2, "call_count"=>1, "sides"=>6, "item"=>:die, "colour"=>:red}>]
+Calling the tally method
+This should return an array of length 1 with the results of the throw
+Succeeded, the results object is [1]
+Calling the Sum method
+This should return an array of length 1 with the results of the throw
+Failed, results_sum = 2, should be 
+Calling the results method
+Calling it with throw = 0, and a description that will return die_1
+Failed, results_arr = [[2]], should be 
+Calling the results method
+Calling it with throw = 1.
+This should return nil since throw has not been called twice
+Succeeded, the results object is 
+Calling the results method
+Calling it with throw = 0.
+But a desc that does not match any of the objects in the throw history
+Succeeded, the results object is [[]], should be 0
+
+There were 2 failure(s) in this section.
+
+More General Testing
+Putting the two coins in the players bag
+Succeeded
+Putting the two coins in the players cup
+Items in the cup: 2
+Throwing the coins
+Printing the results
+Results: [[0, 1]]
+Throwing again
+Printing the results
+Results: [[0, 1], [0, 1]]
+Throwing a third time
+Results: [[0, 1], [0, 1], [1, 0]]
+This shows that the results history is deep copied and not a reference
+
+
+TESTING COMPLETE
+There were 2 failure(s) in this program.
