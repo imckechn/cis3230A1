@@ -1,8 +1,6 @@
-require_relative "constants/constants"
-
-require_relative "classes/Randomizer" 
+require_relative "classes/Randomizer"
 require_relative "classes/Die"
-require_relative "classes/Coin" 
+require_relative "classes/Coin"
 require_relative "classes/Hand"
 require_relative "classes/RandomizerContainer"
 require_relative "classes/Cup"
@@ -13,779 +11,815 @@ require_relative "classes/Player"
 
 
 
-#----------------------------- 
+#-----------------------------
 #   TO DO
 
-# Figure out the tally, sum, and results functions in player.rb
-# Figure out what the emuns are for in the constants file
 # Fix Ruby style guide violations
 # Make sure program is to 'OO' standards
-# Finish testgames.rb file
 # Create 5 use cases for the program
-#Figure out better way to do the _init method in randomizer
 
 #-----------------------------
 
 fail_counter = 0
+total_fails = 0
 
 #------ TESTING THE RANDOMIZER OBJECT ---------
-puts "\n\nTESTING THE RANDOMIZER OBJECT"
+puts"\n\nTESTING THE RANDOMIZER OBJECT"
 
 
-puts "Creating the randomize object with default face count"
-puts "Measurement of success will be not crashing"
+puts"Creating the randomize object with default face count"
+puts"Measurement of success will be not crashing"
 randomizer = Randomizer.new()
-puts "Succeeded"
+puts"Succeeded"
 
-puts "Check the number of randmizations performed, should be zero"
-call_count = randomizer.calls()
-if (call_count == 0)
-    puts "Succeeded"
+puts"Check the number of randmizations performed, should be zero"
+call_count = randomizer.calls
+if call_count.equal?(0)
+    puts"Succeeded"
 else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
 
-puts "Calling randomize on the randomzier object"
-puts "We havent set a side count on it so it should return false"
-randomizer_return = randomizer.randomize()
+puts"Calling randomize on the randomzier object"
+puts"We havent set a side count on it so it should return false"
+randomizer_return = randomizer.randomize
 
 if randomizer_return
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 else
-    puts "Succeeded"
+    puts"Succeeded"
 end
 
-puts "Setting the description of the randmizer to be ['item' => 'not_real']"
-puts "This wont return anything so it will only fail if it crashes"
-randomizer.set_description({'item' => 'not_real'})
-puts "Succeeded"
+puts"Setting the description of the randmizer to be ['item' => 'not_real']"
+puts"This wont return anything so it will only fail if it crashes"
+item_description = 'not_real'
+randomizer.set_description({ "item" => item_description})
+puts"Succeeded"
 
-puts "Calling get_description on the randomizer object"
-puts "This should return the description we set"
-description = randomizer.get_description()
-if description['item'] == 'not_real'
-    puts "Succeeded"
+puts"Calling get_description on the randomizer object"
+puts"This should return the description we set"
+description = randomizer.get_description
+
+if description['item'].equal?(item_description)
+    puts"Succeeded"
 else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
-puts "Testing the matches function on a matching description"
+puts"Testing the matches method on a matching description"
 randomizer.set_description({"description" => "DescA"})
-if randomizer.matches({"description" => "DescA"})
-    puts "Succeeded"
+if randomizer.matches?({"description" => "DescA"})
+    puts"Succeeded"
 else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
-puts "Testing the matches function on a non-matching description"
-if randomizer.matches({"description" => "DescB"})
-    puts "Failed"
+puts"Testing the matches method on a non-matching description"
+if randomizer.matches?({"description" => "DescB"})
+    puts"Failed"
     fail_counter += 1
 
 else
-    puts "Succeeded"
+    puts"Succeeded"
 end
 
-puts "Removing the description (Setting it to nil) and testing the matches function"
+puts"Removing the desc (Setting it to nil) and testing the matches method"
 randomizer.set_description(nil)
-if randomizer.matches({"description" => "DescA"})
-    puts "Succeeded"
+if randomizer.matches?({"description" => "DescA"})
+    puts"Succeeded"
 else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
-puts "Setting the description to be {'description' => 'DescA', 'item' => 'randomizer'}"
-puts "Confirming that it matches with only 1 of the two elements of the description"
+puts"Setting the desc to be {'description' => 'DescA', 'item' => 'randomizer'}"
+puts"Confirming that it matches with only 1 of the two elements of the desc"
 randomizer.set_description({"description" => "DescA", "item" => "randomizer"})
-if randomizer.matches({"description" => "DescA"})
-    puts "Succeeded"
+if randomizer.matches?({"description" => "DescA"})
+    puts"Succeeded"
 else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
-puts "Testing against a description that's the same and has an extra element"
-if randomizer.matches({"description" => "DescA", "item" => "randomizer", "extra" => "element"})
-    
-    puts "Failed"
+puts"Testing against a description that's the same and has an extra element"
+if randomizer.matches?(
+    {"description" => "DescA",
+         "item" => "randomizer",
+          "extra" => "element"
+    }
+)
+
+    puts"Failed"
     fail_counter += 1
 else
-    puts "Succeeded"
+    puts"Succeeded"
 end
 
-puts "\nThere were #{fail_counter} failure(s) in this section."
+puts"\nThere were #{fail_counter} failure(s) in this section."
+total_fails += fail_counter
 
 
 #------ TESTING THE DIE OBJECT ---------
-puts "\n\nTESTING THE DIE OBJECT"
+puts"\n\nTESTING THE DIE OBJECT"
 
-puts "Creating a die object with 6 sides and a red colour"
-puts "Measurement of success will be not crashing as init doesnt return anything"
-die = Die.new(6, Die_colours[1])    #These enums need to be changed
-puts "Succeeded"
+puts"Creating a die object with 6 sides and a red colour"
+puts"Measurement of success will be not crashing"
+puts"This is because init returns nothing"
+die = Die.new(6, :blue)
+puts"Succeeded"
 
-puts "Calling the colour function on the die object"
-puts "This should return the colour we set"
-colour = die.colour()
-if colour == Die_colours[1]
-    puts "Succeeded"
+puts"Calling the colour method on the die object"
+puts"This should return the colour we set"
+colour = die.colour
+if colour.equal?(:blue)
+    puts"Succeeded"
 else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
-puts "Calling the sides function on the die object"
-puts "This should return the sides we set"
-sides = die.sides()
-if sides == 6
-    puts "Succeeded"
+puts"Calling the sides method on the die object"
+puts"This should return the sides we set"
+sides = die.sides
+if sides.equal?(6)
+    puts"Succeeded"
 else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
-puts "Calling the roll() function, should return self on success"
-die.roll()
-puts "Succeeded since it didnt crash and returns self"
+puts"Calling the roll method, should return self on success"
+die.roll
+puts"Succeeded since it didnt crash and returns self"
 
-puts "Calling the result() function, should return the result of the roll"
-result = die.sideup()
-if result == nil
-    puts "Failed, retults are nil"
+puts"Calling the result method, should return the result of the roll"
+result = die.sideup
+if result.equal?(nil)
+    puts"Failed, retults are nil"
     fail_counter += 1
 
-elsif result > 0 && result < 7
-    puts "Succeeded"
+elsif result > 0 and result < 7
+    puts"Succeeded"
 else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
-puts "Calling the set_description() function, should set the description of the die"
-puts "This wont return anything so it will only fail if it crashes"
-die.set_description({'item' => 'die'})
-puts "Succeeded"
+puts"Calling the set_description method, should set the desc of the die"
+puts"This wont return anything so it will only fail if it crashes"
+item_description = 'die'
+die.set_description({'item' => item_description})
+puts"Succeeded"
 
-puts "Calling the description() function, should return the description of the die"
-description = die.get_description()
-if description['item'] == 'die'
-    puts "Succeeded"
+puts"Calling the description method, should return the desc of the die"
+description = die.get_description
+if description['item'].equal?(item_description)
+    puts"Succeeded"
 else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
-puts "Getting the number of faces on the die"
-puts "This should return the number of faces we set"
-num_faces = die.get_num_faces()
-if num_faces == 6
-    puts "Succeeded"
+puts"Getting the number of faces on the die"
+puts"This should return the number of faces we set"
+num_faces = die.get_num_faces
+if num_faces.equal?(6)
+    puts"Succeeded"
 else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
-puts "Calling the reset() function, should reset the die"
-puts "This wont return anything so it will only fail if it crashes"
-die.reset()
-puts "Succeeded in calling reset"
+puts"Calling the rese method, should reset the die"
+puts"This wont return anything so it will only fail if it crashes"
+die.reset
+puts"Succeeded in calling reset"
 
-puts "Checking that it reset the die by asking for results"
-puts "This should return nil"
-result = die.sideup()
-if result == nil
-    puts "Succeeded"
+puts"Checking that it reset the die by asking for results"
+puts"This should return nil"
+result = die.sideup
+if result.equal?(nil)
+    puts"Succeeded"
 else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
-puts "\nThere were #{fail_counter} failure(s) in this section."
-
+puts"\nThere were #{fail_counter} failure(s) in this section."
+total_fails += fail_counter
 
 
 #------ TESTING THE COIN OBJECT ---------
-puts "\n\nTESTING THE COIN OBJECT"
+puts"\n\nTESTING THE COIN OBJECT"
 
-puts "Creating a coin object with a denomination of 50 cents"
-puts "Measurement of success will be not crashing as init doesnt return anything"
-coin = Coin.new(Denominations["0.05"])    #These enums need to be changed
-puts "Succeeded"
+puts"Creating a coin object with a denomination of 50 cents"
+puts"Measurement of success will be not crashing"
+puts"This is because init doesnt return anything"
 
-puts "Getting the demonination of the coin"
-puts "This should return the demonination we set"
-denomination = coin.denomination()
-if denomination == Denominations["0.05"]
-    puts "Succeeded"
+coin = Coin.new(0.05)
+puts"Succeeded"
+
+puts"Getting the demonination of the coin"
+puts"This should return the demonination we set"
+denomination = coin.denomination
+if denomination.equal?(0.05)
+    puts"Succeeded"
 else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
-puts "Calling the flip() function, should return self on success"
-coin.flip()
-puts "Succeeded since it didnt crash and returns self"
+puts"Calling the flip method, should return self on success"
+coin.flip
+puts"Succeeded since it didnt crash and returns self"
 
-puts "Calling the result() function, should return the result of the flip"
-result = coin.sideup()
-if result == nil
-    puts "Failed, retults are nil"
+puts"Calling the result method, should return the result of the flip"
+result = coin.sideup
+if result.equal?(nil)
+    puts"Failed, retults are nil"
     fail_counter += 1
 
-elsif result == :H || result == :T
-    puts "Succeeded"
+elsif result.equal?(:H) or result.equal?(:T)
+    puts"Succeeded"
 else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
-puts "Calling the set_description() function, should set the description of the coin"
-puts "This wont return anything so it will only fail if it crashes"
-coin.set_description({'item' => 'Nickel'})
-puts "Succeeded"
+puts"Calling the set_description method, should set the desc of the coin"
+puts"This wont return anything so it will only fail if it crashes"
+item_description = 'Nickel'
+coin.set_description({'item' => item_description})
+puts"Succeeded"
 
-puts "Calling the get_description() function, should return the description of the coin"
-description = coin.get_description()
-if description['item'] == 'Nickel'
-    puts "Succeeded"
+puts"Calling the get_description method, should return the desc of the coin"
+description = coin.get_description
+if description['item'].equal?(item_description)
+    puts"Succeeded"
 else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
-puts "Calling the reset() function, should reset the coin"
-puts "This wont return anything so it will only fail if it crashes"
-coin.reset()
-puts "Succeeded in calling reset"
+puts"Calling the reset method, should reset the coin"
+puts"This wont return anything so it will only fail if it crashes"
+coin.reset
+puts"Succeeded in calling reset"
 
-puts "Checking that it reset the coin by asking for results"
-puts "This should return nil"
-result = coin.sideup()
-if result == nil
-    puts "Succeeded"
+puts"Checking that it reset the coin by asking for results"
+puts"This should return nil"
+result = coin.sideup
+if result.equal?(nil)
+    puts"Succeeded"
 else
-    puts "Failed, it returned #{result}"
+    puts"Failed, it returned #{result}"
     fail_counter += 1
 end
 
-puts "\nThere were #{fail_counter} failure(s) in this section."
+puts"\nThere were #{fail_counter} failure(s) in this section."
+total_fails += fail_counter
 
 
 
 #------ TESTING THE RANDOMIZER CONTAINER OBJECT ---------
-puts "\n\nTESTING THE RANDOMIZER CONTAINER OBJECT"
+puts"\n\nTESTING THE RANDOMIZER CONTAINER OBJECT"
 
-puts "Initializing the randomizerContianer. This should not crash"
+puts"Initializing the randomizerContianer. This should not crash"
 randomizerContainer = RandomizerContainer.new()
 
-puts "Getting the number of randomizers in the container"
-puts "This should return 0"
-num_randomizers = randomizerContainer.count()
-if num_randomizers == 0
-    puts "Succeeded"
+puts"Getting the number of randomizers in the container"
+puts"This should return 0"
+num_randomizers = randomizerContainer.count
+if num_randomizers.equal?(0)
+    puts"Succeeded"
 else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
-puts "Adding a randomizer to the container"
-puts "This should not crash"
+puts"Adding a randomizer to the container"
+puts"This should not crash"
 randomizerContainer.store(randomizer)
-puts "Succeeded"
+puts"Succeeded"
 
-puts "Getting the number of randomizers in the container"
-puts "This should return 1"
-num_randomizers = randomizerContainer.count()
-if num_randomizers == 1
-    puts "Succeeded"
+puts"Getting the number of randomizers in the container"
+puts"This should return 1"
+num_randomizers = randomizerContainer.count
+if num_randomizers.equal?(1)
+    puts"Succeeded"
 else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
-puts "Adding a list of randomizers of length 2 to the container"
-puts "This should not crash"
+puts"Adding a list of randomizers of length 2 to the container"
+puts"This should not crash"
 randomizerContainer.store_all([coin, die])
-puts "Succeeded"
+puts"Succeeded"
 
-puts "\nThere were #{fail_counter} failure(s) in this section."
+puts"\nThere were #{fail_counter} failure(s) in this section."
+total_fails += fail_counter
 
 
 #------ TESTING THE HAND OBJECT ---------
-puts "TESTING THE HAND OBJECT"
+puts"TESTING THE HAND OBJECT"
 
-puts "Initializing the hand. This should not crash"
+puts"Initializing the hand. This should not crash"
 hand = Hand.new()
-puts "Succeeded"
+puts"Succeeded"
 
-puts "Getting the number of ranomizers in the hand"
-puts "This should return 0"
-num_randomizers = hand.count()
-if num_randomizers == 0
-    puts "Succeeded"
+puts"Getting the number of ranomizers in the hand"
+puts"This should return 0"
+num_randomizers = hand.count
+if num_randomizers.equal?(0)
+    puts"Succeeded"
 else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
-puts "Adding a randomizer to the hand"
-puts "This should not crash"
+puts"Adding a randomizer to the hand"
+puts"This should not crash"
 hand.store(randomizer)
-puts "Succeeded"
+puts"Succeeded"
 
-puts "Getting the number of randomizers in the hand"
-puts "This should return 1"
-num_randomizers = hand.count()
-if num_randomizers == 1
-    puts "Succeeded"
+puts"Getting the number of randomizers in the hand"
+puts"This should return 1"
+num_randomizers = hand.count
+if num_randomizers.equal?(1)
+    puts"Succeeded"
 else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
-puts "Getting the randomizer back from the hand"
-puts "This will return the randomizer we added"
+puts"Getting the randomizer back from the hand"
+puts"This will return the randomizer we added"
 
-new_randomizer = hand.next()
+new_randomizer = hand.next
 
-if new_randomizer.get_description() == randomizer.get_description()
-    puts "Succeeded"
+if new_randomizer.get_description.equal?(randomizer.get_description)
+    puts"Succeeded"
 else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
-puts "Adding 3 randomizers to the hand, then confirming we get them back in the order we put them in"
+puts"Adding 3 randomizers to the hand"
+puts"Then confirming we get them back in the order we put them in"
 hand.store_all([randomizer, die, coin])
 
-randomizer_a = hand.next()
-randomizer_b = hand.next()
-randomizer_c = hand.next()
-randomizer_nil = hand.next()
+randomizer_a = hand.next
+randomizer_b = hand.next
+randomizer_c = hand.next
+randomizer_nil = hand.next
 
-if randomizer_a.get_description() == coin.get_description()
-    if randomizer_b.get_description() == die.get_description()
-        if randomizer_c.get_description() == randomizer.get_description()
-            if randomizer_nil == nil
-                puts "Succeeded, returned each item in order, finishing with nil"
+if randomizer_a.get_description.equal?(coin.get_description)
+    if randomizer_b.get_description.equal?(die.get_description)
+        if randomizer_c.get_description.equal?(randomizer.get_description)
+            if randomizer_nil.equal?(nil)
+                puts"Succeeded, returned each item in order"
+                puts"And finishing with nil"
             else
-                puts "Failed"
+                puts"Failed"
                 fail_counter += 1
             end
         else
-            puts "Failed"
+            puts"Failed"
             fail_counter += 1
         end
     else
-        puts "Failed"
+        puts"Failed"
         fail_counter += 1
     end
 else
-    puts "Failed on coin, got #{randomizer_a.get_description()}"
+    puts"Failed on coin, got #{randomizer_a.get_description}"
     fail_counter += 1
 end
 
-puts "Adding a randomizer to the hand, empyting the hand, then confirming we get nil back and the hand is empty"
+puts"Adding a randomizer to the hand, empyting the hand"
+puts"Then confirming we get nil back and the hand is empty"
 hand.store(randomizer)
 
-answer = hand.empty()
-if answer == nil
-    puts "Succeeded in getting nil back from emptying the hand"
+answer = hand.empty
+if answer.equal?(nil)
+    puts"Succeeded in getting nil back from emptying the hand"
 else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
-answer = hand.next()
-if answer == nil
-    puts "Succeeded in getting nil back from calling next on an empty hand"
+answer = hand.next
+if answer.equal?(nil)
+    puts"Succeeded in getting nil back from calling next on an empty hand"
 else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
-puts "\nThere were #{fail_counter} failure(s) in this section."
+puts"\nThere were #{fail_counter} failure(s) in this section."
+total_fails += fail_counter
 
 
 #------ TESTING THE RESULTS OBJECT ---------
-puts "TESTING THE RESULTS OBJECT"
+puts"TESTING THE RESULTS OBJECT"
 cup = Cup.new()
 
-puts "Initializing the results. This should not crash"
+puts"Initializing the results. This should not crash"
 results = Results.new(cup)
-puts "Succeeded"
+puts"Succeeded"
 
-# Need to test the description feature
-
-puts "Storing 3 randomizers in the results object"
+puts"Storing 3 randomizers in the results object"
 
 results_array = []
 
-die.randomize()
-die_results = die.results()
+die.randomize
+die_results = die.results
 results_array.push(die_results)
 
-coin.randomize()
-coin_results = coin.results()
+coin.randomize
+coin_results = coin.results
 results_array.push(coin_results)
 
 results.store(die)
 results.store(coin)
 puts ("Succeeded in storing both randomizers (Dice and Coin)")
 
-puts "Now getting the results of all the randomizers"
-puts "The results of the randomizers before adding them to the array were: #{results_array} so it will succeeed if it returns the same thing"
-results_from_results = results.results()
+puts"Now getting the results of all the randomizers"
+puts"The results of the randomizers before adding them to the array were"
+puts"#{results_array} so it will succeeed if it returns the same thing"
+results_from_results = results.results
+
+puts "The results from the results object are #{results_from_results}"
 
 if results_from_results == results_array
-    puts "Succeeded"
+    puts"Succeeded"
 else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
-puts "Testing the sum method"
-puts "The sum should only be equal to the the sum of all the results"
+puts"Testing the sum method"
+puts"The sum should only be equal to the the sum of all the results"
 
-sum_results = results.sum()
-if sum_results == (coin.results() + die.results())
-    puts "Succeeded"
+sum_results = results.sum
+if sum_results.equal?((coin.results + die.results))
+    puts"Succeeded"
 else
-    puts "Failed"
-    fail_counter += 1
-end
-
-
-puts "Testing the Tally method"
-puts "The tally should only be equal to 2 since there is no description and there are 2 objects in it"
-tally_results = results.tally()
-if tally_results == 2
-    puts "Succeeded"
-else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
 
-
-puts "Adding a good description to the array and making sure it returns the coin object results"
-results.description(coin.get_description())
-results_from_results = results.results()
-if results_from_results == [coin.results()]
-    puts "Succeeded"
+puts"Testing the Tally method"
+puts"The tally should only be equal to 2 since there is no description"
+puts"and there are 2 objects in it"
+tally_results = results.tally
+if tally_results.equal?(2)
+    puts"Succeeded"
 else
-    puts "Failed"
-end
-
-
-puts "Testing the sum method"
-puts "The sum should only be equal to the coins results"
-sum_results = results.sum()
-if sum_results == coin.results()
-    puts "Succeeded"
-else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
 
-puts "Testing the Tally method"
-puts "The tally should only be equal to the number of coins the results object(1)"
-tally_results = results.tally()
-if tally_results == 1
-    puts "Succeeded"
+puts"Adding a good description to the array"
+puts"and making sure it returns the coin object results"
+results.description(coin.get_description)
+results_from_results = results.results
+if results_from_results[0].equal?(coin.results)
+    puts"Succeeded"
 else
-    puts "Failed"
+    puts"Failed"
+end
+
+puts"Testing the sum method"
+puts"The sum should only be equal to the coins results"
+sum_results = results.sum
+if sum_results.equal?(coin.results)
+    puts"Succeeded"
+else
+    puts"Failed"
     fail_counter += 1
 end
 
-puts "\nThere were #{fail_counter} failure(s) in this section."
+
+puts"Testing the Tally method"
+puts"The tally will only be equal to the number of coins the results object(1)"
+tally_results = results.tally
+if tally_results.equal?(1)
+    puts"Succeeded"
+else
+    puts"Failed"
+    fail_counter += 1
+end
+
+puts"\nThere were #{fail_counter} failure(s) in this section."
+total_fails += fail_counter
 
 
 #------ TESTING THE CUP OBJECT ---------
-puts "TESTING THE CUP OBJECT"
+puts"TESTING THE CUP OBJECT"
 
-puts "Initializing the cup. This should not crash"
+puts"Initializing the cup. This should not crash"
 cup = Cup.new()
-puts "Succeeded"
+puts"Succeeded"
 
-puts "Putting items in a hand object, then loading the cup with the hand"
-puts "Returns self, so if it doesnt crash then it's successful"
+puts"Putting items in a hand object, then loading the cup with the hand"
+puts"Returns self, so if it doesnt crash then it's successful"
 hand.store_all([die, coin])
 cup.load(hand)
-puts "Succeeded"
+puts"Succeeded"
 
-puts "Getting the items back from the hand, then comparing them to the original items"
-puts "Success if they are all returned in the correct order"
-hand = cup.empty()
+puts"Getting the items back from the hand,"
+puts"then comparing them to the original items"
+puts"Success if they are all returned in the correct order"
+hand = cup.empty
 
-if hand.next().equal?(coin) && hand.next().equal?(die)
-    puts "Succeeded"
+if hand.next.equal?(coin) and hand.next.equal?(die)
+    puts"Succeeded"
 else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
-puts "Cup should have nothing in it now"
-if cup.count() == 0
-    puts "Succeeded, cup is empty"
+puts"Cup should have nothing in it now"
+if cup.count.equal?(0)
+    puts"Succeeded, cup is empty"
 else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
 hand.store_all([die, coin])
 cup.load(hand)
 
-puts "Testing the throw function from the cup"
-puts "This should return a results object"
-results = cup.throw()
+puts"Testing the throw method from the cup"
+puts"This should return a results object"
+results = cup.throw
 
-if results.class == Results
-    puts "Succeeded"
+if results.class.equal?(Results)
+    puts"Succeeded"
 else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
-puts "Now checking the sum of the coin and die roll are the same as the results object"
+puts"Checking the sum of the coin and die are the same as the results object"
 
-hand = cup.empty()
-coin = hand.next()
-die = hand.next()
+hand = cup.empty
+coin = hand.next
+die = hand.next
 
-if results.sum() == (coin.results() + die.results())
-    puts "Succeeded"
+if results.sum.equal?((coin.results + die.results))
+    puts"Succeeded"
 else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
 
-puts "\nThere were #{fail_counter} failure(s) in this section."
+puts"\nThere were #{fail_counter} failure(s) in this section."
+total_fails += fail_counter
 
 
 #------ TESTING THE BAG OBJECT ---------
-puts "TESTING THE BAG OBJECT"
-puts "Initializing the bag. This should not crash"
+puts"TESTING THE BAG OBJECT"
+puts"Initializing the bag. This should not crash"
 bag = Bag.new()
-puts "Succeeded"
+puts"Succeeded"
 
-puts "Putting items in a hand object, then loading the bag with the hand"
+puts"Putting items in a hand object, then loading the bag with the hand"
 hand.store_all([die, coin])
 bag.move_all(hand)
-puts "Succeeded"
+puts"Succeeded"
 
-puts "Getting the items back from the bag, then comparing them to the original items"
-hand = bag.empty()
-coin = hand.next()
-die = hand.next()
+puts"Getting the items back from the bag."
+puts"Then comparing them to the original items."
+hand = bag.empty
+coin = hand.next
+die = hand.next
 
-if results.sum() == (coin.results() + die.results())
-    puts "Succeeded"
+if results.sum.equal?((coin.results + die.results))
+    puts"Succeeded"
 else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
-puts "\nThere were #{fail_counter} failure(s) in this section."
+puts"\nThere were #{fail_counter} failure(s) in this section."
+total_fails += fail_counter
 
 
 #------ TESTING THE PLAYER OBJECT ---------
-puts "TESTING THE PLAYER OBJECT"
+puts"TESTING THE PLAYER OBJECT"
 
-puts "Initializing the player. This should not crash"
-player = Player.new("Dave")
-puts "Succeeded"
+puts"Initializing the player. This should not crash"
+player_name = 'Dave'
+player = Player.new(player_name)
+puts"Succeeded"
 
-puts "Getting the players name, it should be Dave"
-name = player.name()
+puts"Getting the players name, it should be Dave"
+name = player.name
 
-if name == "Dave"
-    puts "Succeeded"
+if name.equal?(player_name)
+    puts"Succeeded"
 else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
-#Initing the dice and coins
-die_1 = Die.new(6, Die_colours[0])
+# Instantiating the dice and coins
+die_1 = Die.new(6, :red)
 die_1.set_description({"item" => "die", "colour" => "red", "sides" => 6})
 
-coin_1 = Coin.new(Denominations[0])
+coin_1 = Coin.new(0.05)
 coin_1.set_description({"item" => "coin", "demonination" => "Nickel"})
 
-die_2 = Die.new(10, Die_colours[1])
+die_2 = Die.new(10, :blue)
 die_2.set_description({"item" => "die", "colour" => "blue", "sides" => 10})
 
-coin_2 = Coin.new(Denominations[1])
+coin_2 = Coin.new(0.10)
 coin_2.set_description({"item" => "coin", "denomination" => "Dime"})
 
-puts "Adding a single die to the players bag"
-puts "If it doesnt crash then it's successful"
+puts"Adding a single die to the players bag"
+puts"If it doesnt crash then it's successful"
 player.store(die_1)
 
-if player.get_num_randomziers() == 1
-    puts "Succeeded"
+if player.get_num_randomziers.equal?(1)
+    puts"Succeeded"
 else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
-puts "Adding a batch of 3 coins and die to the players bag"
-puts "If it doesnt crash then it's successful"
+puts"Adding a batch of 3 coins and die to the players bag"
+puts"If it doesnt crash then it's successful"
 randomizerContainer = RandomizerContainer.new()
 randomizerContainer.store_all([coin_1, die_2, coin_2])
 player.move_all(randomizerContainer)
-puts "Succeeded"
+puts"Succeeded"
 
-puts "The number of randomizers in the players bag should be 4"
-if player.get_num_randomziers() == 4
-    puts "Succeeded"
+puts"The number of randomizers in the players bag should be 4"
+if player.get_num_randomziers.equal?(4)
+    puts"Succeeded"
 else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
-puts "All objects the player has = #{player.get_all_objects_player_has()}"
+puts"All objects the player has = #{player.get_all_objects_player_has}"
 
-puts "Moving randomizers to the players cup if the description is 'Fake description'"
+puts"Moving randomizers to the players cup if the desc is 'Fake description'"
 player.load({"Fake description" => "True"})
-count = player.get_num_objects_in_cup()
-if count == 0
-    puts "Succeeded"
+count = player.get_num_objects_in_cup
+if count.equal?(0)
+    puts"Succeeded"
 else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
-puts "adding an object with no decsription to the players bag"
-coin_3 = Coin.new(Denominations[2])
+puts"adding an object with no decsription to the players bag"
+coin_3 = Coin.new(0.25)
 player.store(coin_3)
-puts "Succeeded"
+puts"Succeeded"
 
-puts "Moving randomizers to the players cup if the description is '{'item' => 'coin', 'demonination' => 'Nickel'}'"
-puts "This should 2 coins in the cup"
+puts"Moving randomizers to the players cup if the desc is:"
+puts"'{'item' => 'coin', 'demonination' => 'Nickel'}'"
+puts"This should 2 coins in the cup"
 player.load({"item" => "coin", "demonination" => "Nickel"})
-count = player.get_num_objects_in_cup()
-if count == 2
-    puts "Succeeded"
+count = player.get_num_objects_in_cup
+if count.equal?(2)
+    puts"Succeeded"
 else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
-puts "Trying to move the objects back from the cup to the bag with a bad description"
-puts "This should move the coin without a description"
+puts"Trying to move the objects back from the cup to the bag with a bad desc"
+puts"This should move the coin without a description"
 player.replace({"Hello" => "World"})
-count = player.get_num_objects_in_cup()
-if count == 1
-    puts "Succeeded"
+count = player.get_num_objects_in_cup
+if count.equal?(1)
+    puts"Succeeded"
 else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
-puts "Trying again with a good description"
+puts"Trying again with a good description"
 player.replace({"item" => "coin", "demonination" => "Nickel"})
-count = player.get_num_objects_in_cup()
-if count == 0
-    puts "Succeeded"
+count = player.get_num_objects_in_cup
+if count.equal?(0)
+    puts"Succeeded"
 else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
-puts "Testing the throw method"
-puts "Since there are no items in the cup, this should return a array "
-results = player.throw()
-if results.sum() == 0
-    puts "Succeeded"
+puts"Testing the throw method"
+puts"Since there are no items in the cup, this should return a array "
+results = player.throw
+if results.sum.equal?(0)
+    puts"Succeeded"
 else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
-puts "2 die to the cup"
+puts"2 die to the cup"
 
 player_2 = Player.new("Jane")
 player_2.store(die_1)
 player_2.store(die_2)
-player_2.load({"item" => "die", "colour" => "red", "sides" => 6}) #Only loads die_1
 
-puts "Testing the throw method"
-puts "Since there are items in the cup, this should return a results object"
-results = player_2.throw()
-if results.class == Results
-    puts "Succeeded"
+# Only loads die_1
+player_2.load({"item" => "die", "colour" => "red", "sides" => 6})
+
+puts"Testing the throw method"
+puts"Since there are items in the cup, this should return a results object"
+results = player_2.throw
+if results.class.equal?(Results)
+    puts"Succeeded"
 else
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 end
 
-puts "Calling the tally method"
-puts "This should return an array of length 1 with the results of the throw"
+puts"Calling the tally method"
+puts"This should return an array of length 1 with the results of the throw"
 results = player_2.tally({"item" => "die", "colour" => "red", "sides" => 6})
-if results.length == 1
-    puts "Succeeded"
+if results.length.equal?(1)
+    puts"Succeeded"
 else
-    puts "Failed, results.length = #{results.length}"
+    puts"Failed, results.length = #{results.length}"
     fail_counter += 1
 end
 
 
-puts "Calling the Sum method"
-puts "This should return an array of length 1 with the results of the throw"
+puts"Calling the Sum method"
+puts"This should return an array of length 1 with the results of the throw"
 results_sum = player_2.sum({"item" => "die", "colour" => "red", "sides" => 6})
-if results_sum == die_1.results()
-    puts "Succeeded"
+if results_sum == die_1.results
+    puts"Succeeded"
 else
-    puts "Failed"
+    puts"Failed, results_sum = #{results_sum}, should be #{die_1.results}"
     fail_counter += 1
 end
 
-puts "Calling the results method"
-puts "Calling it with throw = 0, and a description that will return die_1"
-results_arr = player_2.results({"item" => "die", "colour" => "red", "sides" => 6}, 0)
+puts"Calling the results method"
+puts"Calling it with throw = 0, and a description that will return die_1"
+results_arr = player_2.results(
+    {"item" => "die", "colour" => "red", "sides" => 6},
+    0
+)
 
-puts "Results_arr = #{results_arr}"
-
-if results_arr[0][0] == die_1.results()
-    puts "Succeeded"
+if results_arr[0][0].equal?(die_1.results)
+    puts"Succeeded"
 else
-    puts "Failed"
+    puts"Failed, here"
     fail_counter += 1
 end
 
-puts "Calling the results method"
-puts "Calling it with throw = 1, this should return nil since throw has not been called twice"
-results_arr = player_2.results({"item" => "die", "colour" => "red", "sides" => 6}, 1)
+puts"Calling the results method"
+puts"Calling it with throw = 1."
+puts"This should return nil since throw has not been called twice"
+results_arr = player_2.results(
+    {"item" => "die", "colour" => "red", "sides" => 6},
+     1
+)
 if results_arr != nil
-    puts "Failed"
+    puts"Failed"
     fail_counter += 1
 else
-    puts "Succeeded"
+    puts"Succeeded"
 end
 
-puts "Calling the results method"
-puts "Calling it with throw = 0, but a description that does not match any of the objects in the throw history"
-results_arr = player_2.results({"item" => "die", "colour" => "red", "sides" => 10}, 0)
+puts"Calling the results method"
+puts"Calling it with throw = 0."
+puts"But a desc that does not match any of the objects in the throw history"
+results_arr = player_2.results(
+    {"item" => "die", "colour" => "red", "sides" => 10},
+    0
+)
 
-if results_arr[0].length() > 0
-    puts "Failed"
+if results_arr[0].length > 0
+    puts"Failed"
     fail_counter += 1
 else
-    puts "Succeeded"
+    puts"Succeeded"
 end
 
-puts "\nThere were #{fail_counter} failure(s) in this section."
+puts"\nThere were #{fail_counter} failure(s) in this section."
+total_fails += fail_counter
 
 #------ FINAL READOUT ---------
-puts "\n\nTESTING COMPLETE"
-puts "There were #{fail_counter} failure(s) in this program."
+puts"\n\nTESTING COMPLETE"
+puts"There were #{total_fails} failure(s) in this program."

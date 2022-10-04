@@ -1,43 +1,45 @@
-require_relative "Randomizer" 
-require_relative "../constants/constants"
+require_relative "Randomizer"
 
 class Coin < Randomizer
 
-    #constructor (i.e. Coin.new(denomination))
+    # Constructor (i.e. Coin.new(denomination))
     def initialize(denomination)
-        self._init()
+        super()
         @denomination = denomination
         @sides = 2
-        @item = Hash["item" => "coin"] #Item specifies the name of the object
     end
 
-    #returns the denomination of the coin (does not set it)
-    def denomination()
-        return @denomination
+    # Returns the denomination of the coin (does not set it)
+    def denomination
+        @denomination
     end
 
-    #flips the coin
-    #returns self (for method chaining)
-    #is a synonym for randomize()
-    def flip()
-        self.randomize()
-        return self
+    # Flips the coin
+    # Returns self (for method chaining)
+    # Is a synonym for randomize()
+    def flip
+        randomize()
+        self
     end
 
-    #returns :H or :T (the result of the last flip) or nil (if no flips yet done)
-    #is a synonym for result()
-    def sideup()
-        result = self.results()
+    # Returns :H or :T (the result of the last flip)
+    #   or nil (if no flips yet done)
+    # is a synonym for result()
+    def sideup
+        result = results()
 
-        puts "Result: #{result}"
-
-        #Heads = 1, Tails = 0
-        if result == 1
-            return :H
-        elsif result == 0
-            return :T
+        # Heads = 1, Tails = 0
+        if result.equal?(1)
+            :H
+        elsif result.equal?(0)
+            :T
         else
-            return nil
+            nil
         end
+    end
+
+    # To string method
+    def to_s
+        "Coin: #{@denomination}, sides = #{@sides}"
     end
 end

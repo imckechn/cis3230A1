@@ -1,43 +1,46 @@
-require_relative "Randomizer" 
-require_relative "../constants/constants"
+require_relative "Randomizer"
 
 class Die < Randomizer
 
-    #constructor (i.e. Die.new(sides, colour))
+    # Constructor (i.e. Die.new(sides, colour))
     def initialize(sides, colour)
-        self._init()
+        super()
         @sides = sides
         @colour = colour
-        @item = Hash["item" => "die"]
     end
 
-    #returns the colour of the die (does not set it)
-    def colour()
-        return @colour
+    # Returns the colour of the die (does not set it)
+    def colour
+        @colour
     end
 
-    #eturns the number of sides ( does not set it)
-    def sides()
-        return @sides
+    # Returns the number of sides ( does not set it)
+    def sides
+        @sides
     end
 
-    #randomizes and returns self (for method chaining)
-    #is a synonym for randomize()
-    def roll()
-        self.randomize()
-        return self
+    # Randomizes and returns self (for method chaining)
+    # Is a synonym for randomize()
+    def roll
+        randomize()
+        self
     end
 
-    #returns 1..sides or nil
-    #is a synonym for result()
-    def sideup()
-        answer = self.results()
+    # Returns 1..sides or nil
+    # Is a synonym for result()
+    def sideup
+        answer = results()
 
-        if answer == nil
-            return nil
+        if answer.equal?(nil)
+            nil
         else
-            return self.results() + 1
+            results() + 1
         end
+    end
+
+    # To string method
+    def to_s
+        "Die: #{@colour}, sides = #{@sides}"
     end
 
 end

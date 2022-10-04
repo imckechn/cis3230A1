@@ -5,40 +5,40 @@ require_relative "Cup"
 
 class Cup < RandomizerContainer
 
-    def initialize()
-        @item = Hash["item" => "cup"] #Item specifies the name of the object
-        self._init()
+    def initialize
+        super
     end
-    
 
-    #enters each randomizer from a Hand (synonym of move_all() )
+    # Enters each randomizer from a Hand (synonym of move_all() )
     def load(hand)
-        @randomizerList.concat(hand.get_all())
-        return self
+        @randomizer_list.concat(hand.get_all)
+        self
     end
 
-
-    #returns a Hand object to be returned to the bag, and leaves the cup empty
-    def empty()
+    # Returns a Hand object to be returned to the bag, and leaves the cup empty
+    def empty
         hand = Hand.new()
         hand.move_all(self)
-        @randomizerList = []
-        return hand
+        @randomizer_list = []
+        hand
     end
 
-
-    #each randomizer in the cup is rolled or flipped
-    #the results of the thrown randomizers are stored in a newly created Results object, which is returned
-    def throw()
-        #results needs to be updated
-
+    # Each randomizer in the cup is rolled or flipped
+    # The results of the thrown randomizers are stored in
+    #   a newly created Results object, which is returned
+    def throw
         results = Results.new(Cup.new())
 
-        for r in @randomizerList
-            r.randomize()
-            results.store(r)
+        @randomizer_list.each do |randomizer|
+            randomizer.randomize
+            results.store(randomizer)
         end
 
-        return results
+        results
+    end
+
+    # To string method
+    def to_s
+        "Cup with " + @randomizer_list.length.to_s + " randomizers"
     end
 end

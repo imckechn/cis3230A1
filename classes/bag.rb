@@ -3,17 +3,20 @@ require_relative "Hand"
 
 class Bag < RandomizerContainer
 
-    def initialize()
-        #Item specifies the name of the object
-        @item = Hash["item" => "bag"]
-        self._init()
+    def initialize
+        super
     end
 
-    #empties all elements from the Bag into a Hand, which is returned
-    def empty()
+    # Empties all elements from the Bag into a Hand, which is returned
+    def empty
         hand = Hand.new()
         hand.move_all(self)
-        @randomizerList = []
-        return hand
+        @randomizer_list = []
+        hand
+    end
+
+    # To string method
+    def to_s
+        "Bag with " + @randomizer_list.length.to_s + " randomizers"
     end
 end
