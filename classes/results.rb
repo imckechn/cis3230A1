@@ -27,8 +27,9 @@ class Results
         ranomizer_results = []
 
         if @description != nil
+
             @results_array.each do |result|
-                if result.get_description == @description
+                if result.matches?(@description)
                     ranomizer_results.push(result.results())
                 end
             end
@@ -53,7 +54,7 @@ class Results
 
         else
             @results_array.each do |result|
-                counter += 1 if result.get_description == @description
+                counter += 1 if result.matches?(@description)
             end
         end
 
@@ -76,7 +77,7 @@ class Results
 
         else
             @results_array.each do |result|
-                if result.get_description == @description
+                if result.matches?(@description)
                     sum += result.results
                 end
             end

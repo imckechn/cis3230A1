@@ -68,31 +68,19 @@ class Randomizer
     def matches?(description_arg_hash)
         keys_matched_counter = 0
 
-        if @description.equal?({})
+        if description_arg_hash.equal?({})
             return true
         else
-            # Loop through all keys in self.description
-            @description.each do |key, value|
-                # If the key is in the description arg
-                if description_arg_hash.keys.include? key
 
-                    # Check if the values match, if not return false
-                    if description_arg_hash[key] != @description[key]
-                        return false
-                    end
-
-                    # For every match, increase counter by one
-                    keys_matched_counter += 1
+            description_arg_hash.each do |key, value|
+                if !@description.has_key?(key)
+                    return false
+                elsif @description[key] != value
+                    return false
                 end
             end
-        end
 
-        # If it gets here, it means that all the keys in the description
-        #   args are in the randomizer description and the values match
-        if keys_matched_counter == description_arg_hash.keys.length
-            true
-        else
-            false
+            return true
         end
     end
 

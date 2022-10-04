@@ -11,8 +11,9 @@ require_relative "classes/Player"
 #-----------------------------
 #   TO DO
 
-# Make sure program is to 'OO' standards
-# Create 5 use cases for the program
+# Finish fixing bugs
+# Add in more matches tests (Copy his examples)
+# Write use cases
 
 #-----------------------------
 
@@ -59,8 +60,6 @@ puts"Succeeded"
 puts"Calling get_description on the randomizer object"
 puts"This should return the description we set"
 description = randomizer.get_description
-puts "Description class: #{description.class}"
-puts "Description: #{description}"
 
 if description['colour'] == colour_description
     puts"Succeeded"
@@ -71,6 +70,8 @@ end
 
 puts"Testing the matches method on a matching description"
 randomizer.set_description({"description" => "DescA"})
+
+puts "Randomizer description: #{randomizer.get_description}"
 if randomizer.matches?({"description" => "DescA"})
     puts"Succeeded"
 else
@@ -97,20 +98,22 @@ else
     fail_counter += 1
 end
 
-puts"Setting the desc to be {'description' => 'DescA', 'color' => 'randomizer'}"
+puts"Setting desc to be {'description' => 'DescA', 'colour' => 'randomizer'}"
 puts"Confirming that it matches with only 1 of the two elements of the desc"
-randomizer.set_description({"description" => "DescA", "color" => "randomizer"})
-if randomizer.matches?({"description" => "DescA"})
+randomizer.set_description({"description" => "DescA", "colour" => "randomizer"})
+
+puts "randomizer desc is: #{randomizer.get_description}"
+if randomizer.matches?({"colour" => "randomizer"})
     puts"Succeeded"
 else
-    puts"Failed"
+    puts"Failed, it should have matched"
     fail_counter += 1
 end
 
 puts"Testing against a description that's the same and has an extra element"
 if randomizer.matches?(
     {"description" => "DescA",
-         "color" => "randomizer",
+         "colour" => "randomizer",
           "extra" => "element"
     }
 )
@@ -123,7 +126,6 @@ end
 
 puts"\nThere were #{fail_counter} failure(s) in this section."
 total_fails += fail_counter
-
 
 #------ TESTING THE DIE OBJECT ---------
 puts"\n\nTESTING THE DIE OBJECT"
@@ -173,13 +175,13 @@ end
 
 puts"Calling the set_description method, should set the desc of the die"
 puts"This wont return anything so it will only fail if it crashes"
-color_description = 'die'
-die.set_description({'color' => color_description})
+colour_description = 'die'
+die.set_description({'colour' => colour_description})
 puts"Succeeded"
 
 puts"Calling the description method, should return the desc of the die"
 description = die.get_description
-if description['color'].equal?(color_description)
+if description['colour'].equal?(colour_description)
     puts"Succeeded"
 else
     puts"Failed"
@@ -225,8 +227,8 @@ puts"This is because init doesnt return anything"
 coin = Coin.new(0.05)
 puts"Succeeded"
 
-puts"Getting the demonination of the coin"
-puts"This should return the demonination we set"
+puts"Getting the denomination of the coin"
+puts"This should return the denomination we set"
 denomination = coin.denomination
 if denomination.equal?(0.05)
     puts"Succeeded"
@@ -254,13 +256,13 @@ end
 
 puts"Calling the set_description method, should set the desc of the coin"
 puts"This wont return anything so it will only fail if it crashes"
-color_description = 'Nickel'
-coin.set_description({'color' => color_description})
+colour_description = '0.05'
+coin.set_description({'colour' => colour_description})
 puts"Succeeded"
 
 puts"Calling the get_description method, should return the desc of the coin"
 description = coin.get_description
-if description['color'].equal?(color_description)
+if description['colour'].equal?(colour_description)
     puts"Succeeded"
 else
     puts"Failed"
@@ -637,16 +639,12 @@ end
 
 # Instantiating the dice and coins
 die_1 = Die.new(6, :red)
-die_1.set_description({"colour" => "red", "sides" => 6})
 
 coin_1 = Coin.new(0.05)
-coin_1.set_description({"demonination" => "Nickel"})
 
 die_2 = Die.new(10, :blue)
-die_2.set_description({"colour" => "blue", "sides" => 10})
 
 coin_2 = Coin.new(0.10)
-coin_2.set_description({"denomination" => "Dime"})
 
 puts"Adding a single die to the players bag"
 puts"If it doesnt crash then it's successful"
@@ -674,8 +672,6 @@ else
     fail_counter += 1
 end
 
-puts"All objects the player has = #{player.get_all_objects_player_has}"
-
 puts"Moving randomizers to the players cup if the desc is 'Fake description'"
 player.load({"Fake description" => "True"})
 count = player.get_num_objects_in_cup
@@ -692,11 +688,11 @@ player.store(coin_3)
 puts"Succeeded"
 
 puts"Moving randomizers to the players cup if the desc is:"
-puts"'{'item' => 'coin', 'demonination' => '0.25'}'"
-puts"This should move 2 coins in the cup"
-player.load({"item" => "coin", "demonination" => 0.25})
+puts"'{'item' => :coin, 'denomination' => 0.25}'"
+puts"This should move 1 coin in the cup"
+player.load({"item" => :coin, "denomination" => 0.25})
 count = player.get_num_objects_in_cup
-if count.equal?(2)
+if count.equal?(1)
     puts"Succeeded"
 else
     puts"Failed, only moved #{count} objects"
@@ -710,19 +706,20 @@ count = player.get_num_objects_in_cup
 if count.equal?(1)
     puts"Succeeded"
 else
-    puts"Failed"
+    puts"Failed, #{count} objects in cup"
     fail_counter += 1
 end
 
 puts"Trying again with a good description"
-player.replace({"demonination" => "Nickel"})
+player.replace({"denomination" => 0.25})
 count = player.get_num_objects_in_cup
 if count.equal?(0)
     puts"Succeeded"
 else
-    puts"Failed"
+    puts"Failed, #{count} objects in cup"
     fail_counter += 1
 end
+
 
 puts"Testing the throw method"
 puts"Since there are no items in the cup, this should return a array "
@@ -740,8 +737,10 @@ player_2 = Player.new("Jane")
 player_2.store(die_1)
 player_2.store(die_2)
 
+puts "---- die one desc: #{die_1.get_description}"
+
 # Only loads die_1
-player_2.load({"colour" => "red", "sides" => 6})
+player_2.load({"colour" => :red, "sides" => 6})
 
 puts"Testing the throw method"
 puts"Since there are items in the cup, this should return a results object"
@@ -755,7 +754,7 @@ end
 
 puts"Calling the tally method"
 puts"This should return an array of length 1 with the results of the throw"
-results = player_2.tally({"colour" => "red", "sides" => 6})
+results = player_2.tally({"colour" => :red, "sides" => 6})
 if results.length.equal?(1)
     puts"Succeeded"
 else
@@ -763,10 +762,10 @@ else
     fail_counter += 1
 end
 
-
 puts"Calling the Sum method"
 puts"This should return an array of length 1 with the results of the throw"
-results_sum = player_2.sum({"colour" => "red", "sides" => 6})
+results_sum = player_2.sum({"colour" => :red, "sides" => 6})
+
 if results_sum == die_1.results
     puts"Succeeded"
 else
@@ -777,9 +776,12 @@ end
 puts"Calling the results method"
 puts"Calling it with throw = 0, and a description that will return die_1"
 results_arr = player_2.results(
-    {"colour" => "red", "sides" => 6},
+    {"colour" => :red, "sides" => 6},
     0
 )
+
+puts "results_arr = #{results_arr}"
+puts "die_1.results = #{die_1.results}"
 
 if results_arr[0][0].equal?(die_1.results)
     puts"Succeeded"

@@ -135,12 +135,11 @@ class Player
     # If a throw is requested that doesn’t exist (too far back in time and never
     #   occurred), return nil
     # Here a “throw” is short for “the result of a given throw”
-    def results(description, throw)
-
-        return nil if throw + 1 > @throw_results_array.length
+    def results(description, throw_arg)
+        return nil if throw_arg + 1 > @throw_results_array.length
 
         results_array = []
-        for i in 0..throw
+        for i in 0..(throw_arg)
             @throw_results_array[i].description(description)
             results_array.push(@throw_results_array[i].results)
         end
