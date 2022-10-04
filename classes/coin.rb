@@ -5,19 +5,24 @@ class Coin < Randomizer
     # Constructor (i.e. Coin.new(denomination))
     def initialize(denomination)
         super()
-        @denomination = denomination
-        @sides = 2
+        @has_been_flipped = false
+        set_description({
+            "item" => :coin,
+            "sides" => 2,
+            "denomination" => denomination
+        })
     end
 
     # Returns the denomination of the coin (does not set it)
     def denomination
-        @denomination
+        @description["denomination"]
     end
 
     # Flips the coin
     # Returns self (for method chaining)
     # Is a synonym for randomize()
     def flip
+        @has_been_flipped = true
         randomize()
         self
     end
@@ -26,20 +31,23 @@ class Coin < Randomizer
     #   or nil (if no flips yet done)
     # is a synonym for result()
     def sideup
-        result = results()
+        nil if @has_been_flipped.equal?(false)
+        result = results
 
         # Heads = 1, Tails = 0
         if result.equal?(1)
-            :H
+            set_description({"up" => :H})
         elsif result.equal?(0)
-            :T
+            set_description({"up" => :H})
         else
-            nil
+            set_description({"up" => nil})
         end
+
+        @description["up"]
     end
 
     # To string method
     def to_s
-        "Coin: #{@denomination}, sides = #{@sides}"
+        "Coin: #{@denomination}"
     end
 end

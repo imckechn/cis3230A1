@@ -6,7 +6,6 @@ class RandomizerContainer
 
     # Stores a randomizer in the container
     # Returns self (for method chaining)
-
     def store(randomizer)
         @randomizer_list.push(randomizer)
         self

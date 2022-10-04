@@ -4,7 +4,7 @@ require_relative "Cup"
 class Player
 
     # Constructor (ie Player.new("gandalf")"))
-    def initialize(name)
+    def initialize(name = "")
         @name = name
         @bag = Bag.new()
         @cup = Cup.new()
@@ -88,6 +88,9 @@ class Player
     # Store and return the Results (object) of the “thrown items” (which are
     #   still stored in the cup)
     def throw
+        # If there is nothing loaded in the cup, return nil
+        nil if @cup.count.equal?(0)
+
         @throw_results = @cup.throw
         @throw_results_array.push(@throw_results)
         @throw_results

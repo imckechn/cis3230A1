@@ -5,18 +5,17 @@ class Die < Randomizer
     # Constructor (i.e. Die.new(sides, colour))
     def initialize(sides, colour)
         super()
-        @sides = sides
-        @colour = colour
+        set_description({"item" => :die, "colour" => colour, "sides" => sides})
     end
 
     # Returns the colour of the die (does not set it)
     def colour
-        @colour
+        @description["colour"]
     end
 
     # Returns the number of sides ( does not set it)
     def sides
-        @sides
+        @description["sides"]
     end
 
     # Randomizes and returns self (for method chaining)
@@ -29,18 +28,18 @@ class Die < Randomizer
     # Returns 1..sides or nil
     # Is a synonym for result()
     def sideup
-        answer = results()
+        answer = results
 
         if answer.equal?(nil)
             nil
         else
-            results() + 1
+            results + 1
         end
     end
 
     # To string method
     def to_s
-        "Die: #{@colour}, sides = #{@sides}"
+        "Die: #{@colour}"
     end
 
 end
