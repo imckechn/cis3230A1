@@ -72,6 +72,7 @@ class Results
 
         if @description.equal?(nil)
             @results_array.each do |result|
+                puts "Description: " + result.get_description.to_s
                 sum += result.results
             end
 

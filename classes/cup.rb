@@ -31,10 +31,15 @@ class Cup < RandomizerContainer
 
         @randomizer_list.each do |randomizer|
             randomizer_2 = Randomizer.new()
+
+            # Completely erase the randomizer's description
             randomizer_2.set_description(nil)
+
+            # Set the description
             randomizer_2.set_description(randomizer.get_description)
 
-            randomizer_2.randomize
+            randomizer_2.randomize()
+
             results.store(randomizer_2)
         end
 
